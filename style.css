@@ -55,30 +55,11 @@ nav a:hover {
     text-shadow: 0 0 8px var(--primary);
 }
 
-/* HERO */
 .hero {
-    height: 320px;
-    padding: 60px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     text-align: center;
+    padding: 90px 10px;
+    background: linear-gradient(to bottom, #0a0f1a, #0f172a);
     color: var(--primary);
-    background: linear-gradient(to bottom, #06111f, #0a0f1a);
-    border-bottom: 2px solid rgba(0,191,255,0.25);
-}
-
-/* Hapus efek blur gambar */
-.hero::before {
-    display: none;
-}
-
-
-.hero h2,
-.hero p {
-    position: relative;
-    z-index: 2;
 }
 
 /* GAME SECTION */
@@ -245,4 +226,5 @@ footer {
     border-top: 1px solid rgba(0,191,255,0.25);
     color: #fff;
 }
+
 

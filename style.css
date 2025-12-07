@@ -1,373 +1,235 @@
-/* --------------------------------
-   YorTopUp - style.css
-   Final: Responsive + Animations + Theme System
------------------------------------*/
+/* =========================================================
+   YorTopUp - FINAL UI Design
+   Clean Code • Full Responsive • Popup Modal Center
+   ========================================================= */
+
 :root {
   --theme: #009dff;
-  --bg: #08111a;
+  --bg: #07111a;
   --card: #0d1722;
   --muted: #9fbfdc;
-  --accent-weak: rgba(0,0,0,0.08);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* Global Reset */
+* { margin:0; padding:0; box-sizing:border-box; }
 html, body {
-  height: 100%;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
-  color: #e6f2ff;
+  background:var(--bg);
+  color:#e6f2ff;
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+  scroll-behavior:smooth;
 }
 
-/* ---------------- HEADER ---------------- */
+/* =========================================================
+   HEADER NAVBAR
+========================================================= */
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 60;
-  background: linear-gradient(180deg, #07111a, rgba(0,0,0,0.05));
-  border-bottom: 2px solid rgba(0,0,0,0.2);
+  position:sticky; top:0; z-index:50;
+  padding:12px 0;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter: blur(8px);
 }
-
 .header-inner {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  max-width:1180px; margin:auto;
+  padding:0 20px;
+  display:flex; align-items:center; justify-content:space-between;
 }
-
 .brand {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--theme);
-  letter-spacing: 1px;
+  font-size:22px; font-weight:800;
+  color:var(--theme);
 }
-
 .nav {
-  display: flex;
-  gap: 18px;
+  display:flex; gap:18px;
 }
-
 .nav-link {
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--muted);
-  opacity: .95;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600; font-size:14px;
 }
-
 .nav-link.active {
-  color: var(--theme);
-  text-shadow: 0 0 8px var(--theme);
+  color:var(--theme);
+  text-shadow:0 0 8px var(--theme);
 }
 
-/* ---------------- HERO ---------------- */
+/* =========================================================
+   HOMEPAGE GAME CARD
+========================================================= */
 .hero {
-  max-width: 1180px;
-  margin: 10px auto 0;
-  padding: 24px 14px 6px;
-  text-align: center;
+  text-align:center;
+  margin:28px auto 8px;
+  color:var(--theme);
 }
+.hero-sub { font-size:14px; opacity:.8; }
 
-.hero-title {
-  font-size: 22px;
-  color: var(--theme);
-  margin-bottom: 6px;
-}
-
-.hero-sub {
-  color: #8fb7d9;
-  font-size: 13px;
-  margin-bottom: 8px;
-}
-
-/* ---------------- GAME LIST ---------------- */
 .game-section {
-  max-width: 1180px;
-  margin: 12px auto 40px;
-  padding: 0 18px;
+  max-width:1180px; margin:16px auto;
+  padding:0 18px;
 }
-
 .game-list {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 22px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;
 }
-
 .game-card {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.02);
-  border-radius: 12px;
-  padding: 14px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform .18s, box-shadow .18s, border-color .18s;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+  text-align:center;
+  border:1px solid rgba(255,255,255,0.03);
+  transition:.18s;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
-
 .game-card img {
-  width: 100%;
-  height: 140px;
-  object-fit: contain;
-  background: rgba(255,255,255,0.02);
-  border-radius: 8px;
-  margin-bottom: 10px;
+  width:100%; height:160px;
+  object-fit:contain;
+  border-radius:8px;
+  background:rgba(255,255,255,0.04);
 }
-
 .game-card h3 {
-  font-size: 15px;
-  margin-top: 6px;
-  color: #eaf5ff;
+  font-size:15px;
+  margin-top:10px;
 }
-
 .game-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--theme);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6),
-              0 0 18px rgba(0,150,255,0.06);
+  transform:translateY(-6px);
+  border-color:var(--theme);
+  box-shadow:0 14px 40px rgba(0,150,255,0.25);
 }
 
-/* Responsive game grid */
-@media (max-width: 980px) {
-  .game-list { grid-template-columns: repeat(2,1fr); }
-}
-
-@media (max-width: 520px) {
-  .game-list { grid-template-columns: 1fr; gap: 16px; }
-  .hero-title { font-size: 20px; }
-  .game-card img { height: 180px; }
-}
-
-/* ---------------- POPUP ---------------- */
-.popup.hidden {
-  display: none;
-}
-
-/* CENTER POPUP FIX */
+/* =========================================================
+   POPUP MODAL
+========================================================= */
 .popup {
-  display:flex;
-  align-items:center;     /* tengah vertikal */
-  justify-content:center; /* tengah horizontal */
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(6px);
+  z-index:200;
+  padding:20px;
 }
+.popup.hidden { display:none !important; }
 
 .popup-panel {
-  width:95%;
-  max-width:600px;        /* dulu 720px → terlalu lebar */
-  transform: translateY(0);
+  width:100%; max-width:520px;
+  background:linear-gradient(180deg,#0a1622,#07131c);
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.05);
+  box-shadow:0 24px 60px rgba(0,0,0,0.65);
+  transform:scale(.95);
+  opacity:0;
+  transition:.25s;
 }
-
-/* Hilangkan panel kanan (aside) sepenuhnya */
-.popup-aside {
-  display:none !important;
-}
-
-/* Pada layar kecil full width */
-@media(max-width:720px){
-  .popup-panel {
-    width:92%;
-    max-width:420px;
-    margin:0;
-  }
+.popup.show .popup-panel {
+  transform:scale(1);
+  opacity:1;
 }
 
 .popup-body {
   width:100%;
-  padding:26px 30px;
+  padding:24px 28px 30px;
 }
 
-.popup-title {
-  width:100%;
-  text-align:center;
-  margin-bottom:10px;
-}
-
-
+/* Popup Header */
 .btn-back {
-  border: 0;
-  cursor: pointer;
-  padding: 4px 8px;
-  font-weight: 700;
-  background: none;
-  color: var(--theme);
+  border:0; background:transparent;
+  color:var(--theme);
+  cursor:pointer;
+  font-weight:700;
 }
-
 .popup-title {
-  font-size: 20px;
-  color: var(--theme);
+  text-align:center;
+  font-size:20px;
+  color:var(--theme);
+  margin:10px 0 16px;
 }
 
-/* Input & Select */
+/* Inputs */
 .label {
-  display: block;
-  margin: 8px 0;
-  font-size: 13px;
-  font-weight: 700;
-  color: #d9eefc;
+  font-weight:700;
+  font-size:13px;
+  margin:12px 0 6px;
 }
-
-input[type="text"],
-select {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  background: #0a1622;
-  border: 1px solid rgba(255,255,255,0.04);
-  color: #e8f7ff;
-  outline: none;
-  transition: .15s;
-}
-
-input[type="text"]:focus,
-select:focus {
-  border-color: var(--theme);
-  box-shadow: 0 0 12px rgba(0,150,255,0.08);
-}
-
-/* Price list */
-.price-box {
-  max-height: 320px;
-  overflow: auto;
-  margin-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-right: 6px;
-}
-
-.price-box::-webkit-scrollbar {
-  width: 8px;
-}
-
-.price-box::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg,var(--theme), #0078c7);
-  border-radius: 10px;
-}
-
-/* Price items */
-.price-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  text-align: left;
-  background: #071826;
-  border: 1px solid rgba(255,255,255,0.02);
-  transition: transform .12s, box-shadow .15s, border-color .12s;
-}
-
-.price-item strong {
-  font-size: 15px;
-  color: #eaf6ff;
-}
-
-.price-item .small {
-  font-size: 13px;
-  margin-top: 4px;
-  color: #9fc6e6;
-}
-
-.price-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--theme);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-}
-
-.price-item.selected {
-  background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.03));
-  border-color: var(--theme);
-  box-shadow: 0 10px 30px var(--theme);
-}
-
-.price-item.clicked {
-  transform: scale(.98);
-}
-
-/* Footer button */
-.popup-footer {
-  margin-top: 12px;
-  display: flex;
-  gap: 12px;
-}
-
-.btn-wa {
-  width: 100%;
-  padding: 12px 14px;
-  font-weight: 800;
-  border-radius: 10px;
-  border: 0;
-  cursor: pointer;
-  color: #001;
-  background: var(--theme);
-  transition: filter .12s;
-}
-
-.btn-wa:hover { filter: brightness(.95); }
-
-/* ASIDE (desktop view) */
-.popup-aside {
-  flex: 1;
-  padding: 20px;
-  display: none;
-  border-left: 1px solid rgba(255,255,255,0.02);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-}
-
-@media(min-width: 980px) {
-  .popup-aside { display: block; }
-}
-
-/* Popup responsive */
-@media(max-width: 720px) {
-  .popup-panel {
-    flex-direction: column;
-    width: calc(100% - 36px);
-    margin: 18px;
-  }
-  .popup-body {
-    width: 100%;
-  }
-}
-
-/* ---------------- UTILITIES ---------------- */
-.hidden { display: none !important; }
-.show { display: flex !important; }
-
-.small { font-size: 13px; color: var(--muted); }
-
-.center { text-align: center; }
-
-/* Footer */
-.sit
-/* INFO CARD */
-.info-card{
-  background:var(--card);
-  border-radius:12px;
-  max-width:760px;
-  margin:20px auto;
-  padding:26px 28px;
+input[type="text"], select {
+  width:100%;
+  background:#0b1c2c;
   border:1px solid rgba(255,255,255,0.05);
+  padding:12px 14px;
+  border-radius:10px;
+  color:#e7f7ff;
+  outline:none;
+  transition:.15s;
+}
+input:focus, select:focus {
+  border-color:var(--theme);
+  box-shadow:0 0 12px rgba(0,150,255,0.25);
+}
+
+/* Price List */
+.price-box {
+  max-height:260px;
+  overflow-y:auto;
+  display:flex; flex-direction:column;
+  gap:12px;
+  margin-top:8px;
+}
+.price-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#091d2c;
+  padding:14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+  border:1px solid transparent;
+  transition:.18s;
+}
+.price-item strong { font-size:15px; }
+.price-item:hover {
+  border-color:var(--theme);
+  background:#0c2438;
+}
+.price-item.selected {
+  border-color:var(--theme);
+  box-shadow:0 0 14px rgba(0,150,255,0.3);
+}
+
+/* Footer Action */
+.popup-footer {
+  margin-top:18px;
+  position:sticky;
+  bottom:0;
+  background:#07131c;
+  padding-top:14px;
+}
+.btn-wa {
+  width:100%;
+  padding:14px 18px;
+  border-radius:10px;
+  border:0;
+  cursor:pointer;
+  font-weight:800;
+  background:var(--theme);
+  color:#001;
+  transition:.13s;
+}
+.btn-wa:hover { filter:brightness(.92); }
+
+/* =========================================================
+   CARA ORDER & KONTAK PAGE
+========================================================= */
+.page-card {
+  max-width:900px;
+  margin:60px auto;
+  background:var(--card);
+  padding:32px;
+  border-radius:14px;
   box-shadow:0 10px 30px rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.03);
 }
-
-/* ORDER STEPS */
-.step-list{
-  margin-left:18px;
-  font-size:16px;
-  line-height:1.7;
-  color:#d7eaff;
+.page-title {
+  text-align:center;
+  color:var(--theme);
+  margin-bottom:22px;
 }
-.contact-text{
-  font-size:16px;
-  margin-bottom:16px;
-}
-
-
+.page-card ul {

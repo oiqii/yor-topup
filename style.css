@@ -149,59 +149,44 @@ html, body {
   display: none;
 }
 
+/* CENTER POPUP FIX */
 .popup {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  z-index: 120;
+  display:flex;
+  align-items:center;     /* tengah vertikal */
+  justify-content:center; /* tengah horizontal */
 }
 
-.popup-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-}
-
-/* Popup panel */
 .popup-panel {
-  position: relative;
-  margin-top: 48px;
-  width: 92%;
-  max-width: 720px;
-  display: flex;
-  gap: 18px;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.03);
-  background: linear-gradient(180deg, #071622, #071622);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-  transform: translateY(18px);
-  opacity: 0;
-  transition: transform .26s ease, opacity .26s ease;
-}
-
-.popup.show .popup-panel {
+  width:95%;
+  max-width:600px;        /* dulu 720px → terlalu lebar */
   transform: translateY(0);
-  opacity: 1;
 }
 
-/* Left form */
+/* Hilangkan panel kanan (aside) sepenuhnya */
+.popup-aside {
+  display:none !important;
+}
+
+/* Pada layar kecil full width */
+@media(max-width:720px){
+  .popup-panel {
+    width:92%;
+    max-width:420px;
+    margin:0;
+  }
+}
+
 .popup-body {
-  width: 420px;
-  max-width: 100%;
-  padding: 20px;
+  width:100%;
+  padding:26px 30px;
 }
 
-/* Popup header */
-.popup-header {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 8px;
+.popup-title {
+  width:100%;
+  text-align:center;
+  margin-bottom:10px;
 }
+
 
 .btn-back {
   border: 0;
@@ -384,4 +369,5 @@ select:focus {
   font-size:16px;
   margin-bottom:16px;
 }
+
 

@@ -70,7 +70,100 @@
 © 2025 YorTopUp - Aman, Murah & Cepat
 </footer>
 
-<script src="script.js"></script>
+const adminWA = "6282125193522";
+
+const priceData = {
+  "Mobile Legends": [
+    ["86 Diamonds", "Rp 25.000"],
+    ["172 Diamonds", "Rp 48.000"],
+    ["257 Diamonds", "Rp 72.000"],
+    ["344 Diamonds", "Rp 95.000"],
+    ["568 Diamonds", "Rp 145.000"]
+  ],
+  "Free Fire": [
+    ["70 Diamonds", "Rp 10.000"],
+    ["140 Diamonds", "Rp 18.000"],
+    ["355 Diamonds", "Rp 45.000"],
+    ["720 Diamonds", "Rp 90.000"]
+  ],
+  "PUBG Mobile": [
+    ["60 UC", "Rp 12.000"],
+    ["300 UC", "Rp 56.000"],
+    ["600 UC", "Rp 110.000"],
+    ["1500 UC", "Rp 260.000"]
+  ],
+  "Genshin Impact": [
+    ["Welkin", "Rp 65.000"],
+    ["300 Genesis", "Rp 65.000"],
+    ["980 Genesis", "Rp 190.000"],
+    ["1980 Genesis", "Rp 380.000"]
+  ]
+};
+
+let selectedGame = "";
+let selectedPrice = "";
+
+function openPopup(game) {
+  selectedGame = game;
+  document.getElementById("popupGame").innerText = "Top Up " + game;
+  generatePrice(game);
+  changeTheme(game);
+  document.getElementById("popup").style.display = "flex";
+}
+
+function generatePrice(game) {
+  let html = "";
+  priceData[game].forEach(item => {
+    html += `
+      <div class="price-item" onclick="selectPrice(this)">
+        <h4>${item[0]}</h4>
+        <p>${item[1]}</p>
+      </div>`;
+  });
+  document.getElementById("priceList").innerHTML = html;
+}
+
+function selectPrice(e) {
+  document.querySelectorAll(".price-item")
+    .forEach(c => c.classList.remove("selected"));
+
+  e.classList.add("selected");
+  selectedPrice = e.innerText.trim();
+}
+
+function changeTheme(game) {
+  let color = "#009dff";
+  if(game === "Free Fire") color = "#ffaa00";
+  if(game === "PUBG Mobile") color = "#d4901f";
+  if(game === "Genshin Impact") color = "#7FC3FF";
+  document.documentElement.style.setProperty("--theme", color);
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+function sendOrder() {
+  let uid = document.getElementById("uid").value;
+  let zone = document.getElementById("zone").value;
+  let pay = document.getElementById("payment").value;
+
+  if(uid == "" || zone == "" || selectedPrice == "" || pay == ""){
+    alert("Lengkapi semua data!");
+    return;
+  }
+
+  let text =
+`Halo Admin, saya ingin top up.
+Game: ${selectedGame}
+User ID: ${uid} (${zone})
+Nomor Item: ${selectedPrice}
+Metode Bayar: ${pay}`;
+
+  window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`);
+}
+
 
 </body>
 </html>
+

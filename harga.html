@@ -1,184 +1,291 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Game Murah - Daftar Harga</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top Up Game Murah - Daftar Harga</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>TOP UP GAME MURAH</h1>
-    <nav>
-        <a href="index.html">Beranda</a>
-        <a class="active" href="harga.html">Daftar Harga</a>
-        <a href="cara-order.html">Cara Order</a>
-        <a href="kontak.html">Kontak</a>
-    </nav>
+  <h1>TOP UP GAME MURAH</h1>
+  <nav>
+    <a href="index.html">Beranda</a>
+    <a class="active" href="harga.html">Daftar Harga</a>
+    <a href="cara-order.html">Cara Order</a>
+    <a href="kontak.html">Kontak</a>
+  </nav>
 </header>
 
 <div class="container">
 
-    <!-- STEP 1 -->
-    <div class="topup-form">
-        <div class="form-title">
-            <span class="step-number">1</span>
-            Masukkan User ID
-        </div>
-
-        <div class="form-inputs">
-            <input type="text" id="uid" placeholder="Masukkan User ID">
-            <input type="text" id="zone" placeholder="Zone ID">
-        </div>
-
-        <p class="note">
-            Cek profil dalam game untuk mengetahui User ID. Contoh: 12345678(1234)
-        </p>
+  <!-- STEP 1 -->
+  <div class="topup-form">
+    <div class="form-title">
+      <span class="step-number">1</span>
+      Masukkan User ID
     </div>
 
-    <!-- STEP 2 -->
-    <div class="topup-form">
-        <div class="form-title">
-            <span class="step-number">2</span>
-            Pilih Nominal Top Up
-        </div>
-
-        <div class="price-list">
-            <div class="price-card" onclick="selectPrice(this)">
-                <h4>86 Diamonds</h4>
-                <p>Rp 25.000</p>
-            </div>
-
-            <div class="price-card" onclick="selectPrice(this)">
-                <h4>172 Diamonds</h4>
-                <p>Rp 48.000</p>
-            </div>
-
-            <div class="price-card" onclick="selectPrice(this)">
-                <h4>257 Diamonds</h4>
-                <p>Rp 72.000</p>
-            </div>
-        </div>
+    <div class="form-inputs">
+      <input type="text" id="uid" placeholder="Masukkan User ID">
+      <input type="text" id="zone" placeholder="Zone ID">
     </div>
 
-    <!-- STEP 3 -->
-    <div class="topup-form">
-        <div class="form-title">
-            <span class="step-number">3</span>
-            Pilih Metode Pembayaran
-        </div>
+    <p class="note">
+      Cek profil dalam game untuk mengetahui User ID. Contoh: 12345678(1234)
+    </p>
+  </div>
 
-        <select id="payment">
-            <option value="">-- Pilih Metode Pembayaran --</option>
-            <option value="Dana">Dana</option>
-            <option value="OVO">OVO</option>
-            <option value="Gopay">Gopay</option>
-            <option value="Transfer Bank">Transfer Bank</option>
-        </select>
+  <!-- STEP 2 (dynamic) -->
+  <div class="topup-form">
+    <div class="form-title" id="gameTitle">
+      <span class="step-number">2</span>
+      Pilih Nominal
     </div>
 
-    <!-- BUTTON -->
-    <button id="btnProses" onclick="showPopup()">Proses Sekarang</button>
+    <div id="gameHeader" class="game-header">
+      <!-- thumbnail + game name akan di-insert di sini -->
+    </div>
+
+    <div class="price-list" id="priceList">
+      <!-- opsi nominal di-generate oleh JS -->
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="topup-form">
+    <div class="form-title">
+      <span class="step-number">3</span>
+      Pilih Metode Pembayaran
+    </div>
+
+    <select id="payment">
+      <option value="">-- Pilih Metode Pembayaran --</option>
+      <option value="Dana">Dana</option>
+      <option value="OVO">OVO</option>
+      <option value="Gopay">Gopay</option>
+      <option value="Transfer Bank">Transfer Bank</option>
+    </select>
+  </div>
+
+  <!-- STEP 4: Upload bukti -->
+  <div class="topup-form">
+    <div class="form-title">
+      <span class="step-number">4</span>
+      Upload Bukti Pembayaran (opsional)
+    </div>
+
+    <input type="file" id="proofFile" accept="image/*" />
+    <div id="previewBox" class="preview-box" style="display:none;">
+      <img id="previewImg" alt="Preview Bukti" />
+      <button type="button" id="removeProof">Hapus</button>
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+    <button id="btnProses" onclick="processOrder()">Proses Sekarang</button>
+
+    <!-- Tombol WA (akan berisi pesan dan membuka WA) -->
+    <a id="waButton" class="wa-btn" href="#" target="_blank" rel="noopener" style="display:none;">
+      Pesan via WhatsApp
+    </a>
+  </div>
+
+  <!-- Loading overlay -->
+  <div id="loader" class="loader" style="display:none;">
+    <div class="spinner"></div>
+    <div class="loader-text">Memproses...</div>
+  </div>
 
 </div>
-
 
 <!-- POPUP KONFIRMASI -->
-<div class="popup" id="popupBox">
-    <div class="popup-content">
-        <h3>Konfirmasi Pesanan</h3>
-        <p id="confirmText" style="white-space: pre-line;"></p>
-        <button onclick="closePopup()">Tutup</button>
+<div class="popup" id="popupBox" style="display:none;">
+  <div class="popup-content">
+    <h3>Konfirmasi Pesanan</h3>
+    <p id="confirmText" style="white-space:pre-line;"></p>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
+      <button onclick="closePopup()">Tutup</button>
+      <button id="confirmToWhatsApp">Kirim ke WhatsApp</button>
     </div>
+  </div>
 </div>
-
 
 <footer>
   © 2025 YorTopUp - Layanan top up murah & terpercaya.
 </footer>
 
 <script>
-let selectedPrice = "";
-const game = localStorage.getItem("selectedGame") || "Mobile Legends";
+/* ====== CONFIG ====== */
+// nomor admin (format internasional tanpa +) — aku ubah dari nomor yang kamu kirim
+const ADMIN_PHONE = "6282125193522";
 
-// Judul Step 2 Agar Sesuai Game
-document.querySelectorAll(".form-title")[1].innerHTML =
-`<span class='step-number'>2</span> Pilih Nominal - ${game}`;
-
-
-// List Harga Berdasarkan Game
-const priceData = {
-    "Mobile Legends": [
-        ["86 Diamonds", "Rp 25.000"],
-        ["172 Diamonds", "Rp 48.000"],
-        ["257 Diamonds", "Rp 72.000"]
-    ],
-    "Free Fire": [
-        ["70 Diamonds", "Rp 10.000"],
-        ["140 Diamonds", "Rp 18.000"],
-        ["355 Diamonds", "Rp 45.000"]
-    ],
-    "PUBG Mobile": [
-        ["60 UC", "Rp 12.000"],
-        ["300 UC", "Rp 56.000"],
-        ["600 UC", "Rp 110.000"]
-    ],
-    "Genshin Impact": [
-        ["Welkin", "Rp 65.000"],
-        ["300 Genesis", "Rp 65.000"],
-        ["980 Genesis", "Rp 190.000"]
+/* theme colors per game (bisa diubah nanti) */
+const GAME_CONFIG = {
+  "Mobile Legends": {
+    color: "#00bfff",
+    thumb: "images/MobileLegends.png",
+    publisher: "Moonton",
+    prices: [
+      ["86 Diamonds", "Rp 25.000"],
+      ["172 Diamonds", "Rp 48.000"],
+      ["257 Diamonds", "Rp 72.000"]
     ]
+  },
+  "Free Fire": {
+    color: "#ff7a00",
+    thumb: "images/FreeFire.jpg",
+    publisher: "Garena",
+    prices: [
+      ["70 Diamonds", "Rp 10.000"],
+      ["140 Diamonds", "Rp 18.000"],
+      ["355 Diamonds", "Rp 45.000"]
+    ]
+  },
+  "PUBG Mobile": {
+    color: "#4ade80",
+    thumb: "images/PubgMobile.png",
+    publisher: "Tencent Games",
+    prices: [
+      ["60 UC", "Rp 12.000"],
+      ["300 UC", "Rp 56.000"],
+      ["600 UC", "Rp 110.000"]
+    ]
+  },
+  "Genshin Impact": {
+    color: "#9be7ff",
+    thumb: "images/GenshinImpact.png",
+    publisher: "MiHoYo",
+    prices: [
+      ["Welkin", "Rp 65.000"],
+      ["300 Genesis", "Rp 65.000"],
+      ["980 Genesis", "Rp 190.000"]
+    ]
+  }
 };
 
+/* ====== INIT ====== */
+let selectedPrice = "";
+let selectedGame = localStorage.getItem("selectedGame") || "Mobile Legends";
+applyGameUI(selectedGame);
 
-// Tampilkan harga sesuai game yang dipilih
-let priceHTML = "";
-priceData[game].forEach(item => {
-    priceHTML += `
-    <div class="price-card" onclick="selectPrice(this)">
-        <h4>${item[0]}</h4>
-        <p>${item[1]}</p>
-    </div>`;
-});
-document.querySelector(".price-list").innerHTML = priceHTML;
+/* generate UI sesuai game */
+function applyGameUI(game) {
+  const cfg = GAME_CONFIG[game] || GAME_CONFIG["Mobile Legends"];
 
+  // set theme color CSS variable
+  document.documentElement.style.setProperty('--primary', cfg.color);
 
-// Pilih Harga
-function selectPrice(card) {
-    document.querySelectorAll(".price-card")
-    .forEach(c => c.classList.remove("selected"));
+  // update game header (thumb + title + publisher)
+  const gh = document.getElementById("gameHeader");
+  gh.innerHTML = `
+    <div style="display:flex; gap:12px; align-items:center;">
+      <img src="${cfg.thumb}" alt="${game}" style="width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,255,255,0.06)">
+      <div>
+        <div style="color:var(--primary); font-weight:700; font-size:18px;">${game}</div>
+        <div style="font-size:13px; opacity:.8; margin-top:6px;">${cfg.publisher}</div>
+      </div>
+    </div>
+  `;
 
-    card.classList.add("selected");
-    selectedPrice = card.innerText;
+  // generate price cards
+  const list = document.getElementById("priceList");
+  list.innerHTML = "";
+  cfg.prices.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "price-card";
+    card.innerHTML = `<h4>${p[0]}</h4><p>${p[1]}</p>`;
+    card.onclick = () => selectPrice(card);
+    list.appendChild(card);
+  });
+
+  // reset selection
+  selectedPrice = "";
+  document.querySelectorAll(".price-card").forEach(c => c.classList.remove("selected"));
+
+  // update Step 2 title
+  document.getElementById("gameTitle").innerHTML = `<span class='step-number'>2</span> Pilih Nominal - ${game}`;
 }
 
+/* select price */
+function selectPrice(card) {
+  document.querySelectorAll(".price-card").forEach(c => c.classList.remove("selected"));
+  card.classList.add("selected");
+  selectedPrice = card.innerText.trim();
+}
 
-// Popup Konfirmasi
-function showPopup() {
-    let userId = document.getElementById("uid").value;
-    let zone = document.getElementById("zone").value;
-    let payment = document.getElementById("payment").value;
+/* file upload preview */
+const proofFile = document.getElementById("proofFile");
+const previewBox = document.getElementById("previewBox");
+const previewImg = document.getElementById("previewImg");
+const removeProof = document.getElementById("removeProof");
 
-    if(userId === "" || zone === "" || payment === "" || selectedPrice === "") {
-        alert("Data belum lengkap!");
-        return;
-    }
+if (proofFile) {
+  proofFile.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      previewImg.src = ev.target.result;
+      previewBox.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
-    document.getElementById("confirmText").innerText =
-`Game : ${game}
-User ID : ${userId} (${zone})
+if (removeProof) removeProof.addEventListener("click", () => {
+  proofFile.value = "";
+  previewImg.src = "";
+  previewBox.style.display = "none";
+});
+
+/* simulate processing (loading) then show popup */
+function processOrder() {
+  const uid = document.getElementById("uid").value.trim();
+  const zone = document.getElementById("zone").value.trim();
+  const payment = document.getElementById("payment").value;
+
+  if (!uid || !zone || !payment || !selectedPrice) {
+    alert("Mohon lengkapi seluruh langkah (UID, Zone, Nominal, Metode).");
+    return;
+  }
+
+  // show loader
+  document.getElementById("loader").style.display = "flex";
+
+  // simulate 1.2s processing
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    // prepare confirmation text
+    const confirmText = `Game : ${selectedGame}
+User ID : ${uid} (${zone})
 Nominal : ${selectedPrice}
-Pembayaran : ${payment}`;
+Metode : ${payment}
+Bukti : ${proofFile && proofFile.files && proofFile.files.length ? "Terupload" : "Tidak ada"}`;
 
+    document.getElementById("confirmText").innerText = confirmText;
     document.getElementById("popupBox").style.display = "flex";
+
+    // prepare WA button link and also confirm to WA button
+    const waMessage = encodeURIComponent(
+      `Halo Admin, saya ingin top up.%0AGame: ${selectedGame}%0AUser ID: ${uid} (${zone})%0ANominal: ${selectedPrice}%0AMetode: ${payment}`
+    );
+    document.getElementById("waButton").href = `https://wa.me/${ADMIN_PHONE}?text=${waMessage}`;
+    document.getElementById("waButton").style.display = "inline-block";
+
+    document.getElementById("confirmToWhatsApp").onclick = () => {
+      window.open(`https://wa.me/${ADMIN_PHONE}?text=${waMessage}`, "_blank");
+    };
+
+  }, 1200);
 }
 
 function closePopup() {
-    document.getElementById("popupBox").style.display = "none";
+  document.getElementById("popupBox").style.display = "none";
 }
 </script>
 
 </body>
 </html>
-

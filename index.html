@@ -1,93 +1,117 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Game Murah</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YorTopUp — Top Up Game Murah</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <h1>TOP UP GAME MURAH</h1>
-  <nav>
-    <a class="active">Beranda</a>
-    <a href="#">Cara Order</a>
-    <a href="#">Kontak</a>
-  </nav>
+<header class="site-header">
+  <div class="header-inner">
+    <h1 class="brand">TOP UP GAME MURAH</h1>
+    <nav class="nav">
+      <a href="index.html" class="nav-link active">Beranda</a>
+      <a href="cara-order.html" class="nav-link">Cara Order</a>
+      <a href="kontak.html" class="nav-link">Kontak</a>
+    </nav>
+  </div>
 </header>
 
-<section class="game-section">
-    <h2>Pilih Game Kamu</h2>
+<main>
+  <section class="hero">
+    <h2 class="hero-title">Pilih Game Kamu</h2>
+    <p class="hero-sub">Layanan Top Up Cepat & Aman — Mobile Legends, Free Fire, PUBG, Genshin Impact</p>
+  </section>
 
+  <section class="game-section">
     <div class="game-list">
-        <div class="game-card" onclick="openPopup('Mobile Legends')">
-            <img src="images/MobileLegends.png">
-            <h3>Mobile Legends</h3>
-        </div>
-        <div class="game-card" onclick="openPopup('Free Fire')">
-            <img src="images/FreeFire.jpg">
-            <h3>Free Fire</h3>
-        </div>
-        <div class="game-card" onclick="openPopup('PUBG Mobile')">
-            <img src="images/PubgMobile.png">
-            <h3>PUBG Mobile</h3>
-        </div>
-        <div class="game-card" onclick="openPopup('Genshin Impact')">
-            <img src="images/GenshinImpact.png">
-            <h3>Genshin Impact</h3>
-        </div>
+      <article class="game-card" onclick="openPopup('Mobile Legends')">
+        <img src="images/MobileLegends.png" alt="Mobile Legends" />
+        <h3>Mobile Legends</h3>
+      </article>
+
+      <article class="game-card" onclick="openPopup('Free Fire')">
+        <img src="images/FreeFire.jpg" alt="Free Fire" />
+        <h3>Free Fire</h3>
+      </article>
+
+      <article class="game-card" onclick="openPopup('PUBG Mobile')">
+        <img src="images/PubgMobile.png" alt="PUBG Mobile" />
+        <h3>PUBG Mobile</h3>
+      </article>
+
+      <article class="game-card" onclick="openPopup('Genshin Impact')">
+        <img src="images/GenshinImpact.png" alt="Genshin Impact" />
+        <h3>Genshin Impact</h3>
+      </article>
     </div>
-</section>
+  </section>
+</main>
 
-<!-- POPUP -->
-<div id="popup" class="popup-full">
-    <div class="popup-box">
-        <button class="back-btn" onclick="closePopup()">← Kembali</button>
+<!-- POPUP FULLSCREEN (script akan mengisi content priceList) -->
+<div id="popup" class="popup hidden" aria-hidden="true">
+  <div class="popup-panel" role="dialog" aria-modal="true">
+    <header class="popup-header">
+      <button class="btn-back" onclick="closePopup()">← Kembali</button>
+      <h3 id="popupGame" class="popup-title">Top Up</h3>
+    </header>
 
-        <h2 id="popupGame">Top Up</h2>
+    <div class="popup-body">
+      <label class="label">User ID</label>
+      <input id="uid" type="text" placeholder="Masukkan User ID (contoh: 12345678)" />
 
-        <input type="text" id="uid" placeholder="Masukkan User ID">
-        <input type="text" id="zone" placeholder="Zone ID">
+      <label class="label">Zone ID</label>
+      <input id="zone" type="text" placeholder="Zone ID (jika ada)" />
 
-        <h3>Pilih Nominal</h3>
-        <div id="priceList" class="price-box"></div>
+      <label class="label">Pilih Nominal</label>
+      <div id="priceList" class="price-box"></div>
 
-        <h3>Pembayaran</h3>
-        <select id="payment">
-            <option value="">Pilih metode pembayaran</option>
-            <option value="Dana">Dana</option>
-            <option value="OVO">OVO</option>
-            <option value="Gopay">Gopay</option>
-            <option value="Transfer Bank">Transfer Bank</option>
-        </select>
+      <label class="label">Metode Pembayaran</label>
+      <select id="payment">
+        <option value="">-- Pilih Metode Pembayaran --</option>
+        <option>Gopay</option>
+        <option>Dana</option>
+        <option>OVO</option>
+        <option>Bank Transfer</option>
+      </select>
 
+      <div class="popup-footer">
         <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
+      </div>
     </div>
+  </div>
+
+  <!-- klik luar untuk tutup -->
+  <div class="popup-backdrop" onclick="closePopup()"></div>
 </div>
 
-<footer>
- © 2025 YorTopUp - Cepat, Murah & Aman
+<footer class="site-footer">
+  <div>© 2025 YorTopUp — Cepat, Murah & Aman</div>
 </footer>
 
-
-<!-- ================== SCRIPT DI DALAM HTML =================== -->
+<!-- ========== SCRIPT (di dalam HTML sesuai request) ========== -->
 <script>
+/* ================== CONFIG ================== */
 const adminWA = "6282125193522";
 
+/* priceData: [ [label, price], ... ] */
 const priceData = {
   "Mobile Legends": [
     ["86 Diamonds", "Rp 25.000"],
     ["172 Diamonds", "Rp 48.000"],
     ["257 Diamonds", "Rp 72.000"],
     ["344 Diamonds", "Rp 95.000"],
-    ["568 Diamonds", "Rp 145.000"]
+    ["568 Diamonds", "Rp 145.000"],
+    ["Weekly Pass", "Rp 28.000"]
   ],
   "Free Fire": [
     ["70 Diamonds", "Rp 10.000"],
     ["140 Diamonds", "Rp 18.000"],
     ["355 Diamonds", "Rp 45.000"],
-    ["720 Diamonds", "Rp 90.000"]
+    ["720 Diamonds", "Rp 90.000"],
+    ["1680 Diamonds", "Rp 200.000"]
   ],
   "PUBG Mobile": [
     ["60 UC", "Rp 12.000"],
@@ -103,69 +127,128 @@ const priceData = {
   ]
 };
 
+/* ================== STATE ================== */
 let selectedGame = "";
 let selectedPrice = "";
 
+/* ================== DOM HELPERS ================== */
+const $ = id => document.getElementById(id);
+
+/* ================== OPEN / GENERATE ================== */
 function openPopup(game) {
   selectedGame = game;
-  document.getElementById("popupGame").innerText = "Top Up " + game;
+  selectedPrice = "";
+  // set title
+  $("popupGame").innerText = "Top Up " + game;
+  // generate price cards
   generatePrice(game);
+  // apply theme color
   changeTheme(game);
-  document.getElementById("popup").style.display = "flex";
+  // show popup with animation
+  const p = $("popup");
+  p.classList.remove("hidden");
+  p.classList.add("show"); // slide-in
+  p.setAttribute("aria-hidden", "false");
+  // scroll top inside panel
+  document.querySelector(".popup-panel").scrollTop = 0;
+  // clear inputs
+  $("uid").value = "";
+  $("zone").value = "";
+  $("payment").value = "";
 }
 
+/* build price list */
 function generatePrice(game) {
-  let html = "";
-  priceData[game].forEach(item => {
-    html += `
-      <div class="price-item" onclick="selectPrice(this)">
-        <h4>${item[0]}</h4>
-        <p>${item[1]}</p>
-      </div>`;
+  const container = $("priceList");
+  container.innerHTML = "";
+  const list = priceData[game] || [];
+  list.forEach(item => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "price-item";
+    card.innerHTML = `<div class="price-left"><strong>${escapeHtml(item[0])}</strong><div class="small">${escapeHtml(item[1])}</div></div>`;
+    card.onclick = () => selectPrice(card, item);
+    container.appendChild(card);
   });
-  document.getElementById("priceList").innerHTML = html;
 }
 
-function selectPrice(e) {
-  document.querySelectorAll(".price-item")
-    .forEach(c => c.classList.remove("selected"));
-
-  e.classList.add("selected");
-  selectedPrice = e.innerText.trim();
+/* ================== SELECT PRICE ================== */
+function selectPrice(el, item) {
+  // only one selected
+  document.querySelectorAll(".price-item").forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+  selectedPrice = item[0] + " — " + item[1];
+  // quick click animation
+  el.classList.add("clicked");
+  setTimeout(() => el.classList.remove("clicked"), 160);
 }
 
+/* ================== THEME ================== */
 function changeTheme(game) {
-  let color = "#009dff";
-  if(game === "Free Fire") color = "#ffaa00";
-  if(game === "PUBG Mobile") color = "#d4901f";
-  if(game === "Genshin Impact") color = "#7FC3FF";
+  let color = "#009dff"; // default ML
+  if (game === "Free Fire") color = "#ffb400";
+  if (game === "PUBG Mobile") color = "#d48f2a";
+  if (game === "Genshin Impact") color = "#7ecbff";
   document.documentElement.style.setProperty("--theme", color);
 }
 
+/* ================== CLOSE POPUP ================== */
 function closePopup() {
-  document.getElementById("popup").style.display = "none";
+  const p = $("popup");
+  p.classList.remove("show");
+  p.classList.add("hidden");
+  p.setAttribute("aria-hidden", "true");
 }
 
+/* ================== ORDER ================== */
 function sendOrder() {
-  let uid = document.getElementById("uid").value;
-  let zone = document.getElementById("zone").value;
-  let pay = document.getElementById("payment").value;
+  const uid = $("uid").value.trim();
+  const zone = $("zone").value.trim();
+  const pay = $("payment").value;
 
-  if(uid === "" || zone === "" || selectedPrice === "" || pay === ""){
-    alert("Lengkapi semua data!");
-    return;
-  }
+  if (!uid) { alert("Isi User ID terlebih dahulu."); return; }
+  if (!selectedPrice) { alert("Pilih nominal top up."); return; }
+  if (!pay) { alert("Pilih metode pembayaran."); return; }
 
-  let text =
+  // build message
+  const message =
 `Halo Admin, saya ingin top up.
 Game: ${selectedGame}
-User ID: ${uid} (${zone})
+User ID: ${uid} ${zone ? "(" + zone + ")" : ""}
 Nominal: ${selectedPrice}
 Metode Bayar: ${pay}`;
 
-  window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`);
+  // open WA
+  const url = `https://wa.me/${adminWA}?text=${encodeURIComponent(message)}`;
+  // optional: visual feedback - disable button briefly
+  const btn = document.querySelector(".btn-wa");
+  btn.disabled = true;
+  btn.innerText = "Membuka WhatsApp...";
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.innerText = "Order via WhatsApp";
+    window.open(url, "_blank");
+  }, 600);
 }
-</script>
 
+/* ================== UTILS ================== */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, tag => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[tag]);
+}
+
+/* ================== keyboard: esc close ================== */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const p = document.getElementById("popup");
+    if (p && !p.classList.contains("hidden")) closePopup();
+  }
+});
+
+/* ================== mobile: close when tapping backdrop ================== */
+/* handled by .popup-backdrop onclick in HTML */
+
+</script>
 </body>
 </html>

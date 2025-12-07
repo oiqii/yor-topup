@@ -352,4 +352,47 @@ footer {
     border: none;
     cursor: pointer;
 }
+:root {
+    --theme: #009dff; /* berubah otomatis */
+}
+
+.back-btn {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 8px;
+    background: transparent;
+    border: 2px solid var(--theme);
+    color: var(--theme);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto; /* scroll harga */
+}
+
+.price-item {
+    border: 2px solid var(--theme);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+}
+.price-item.selected {
+    background: var(--theme);
+    color: #000;
+    font-weight: bold;
+}
+
+.price-icon {
+    width: 32px; height: 32px;
+}
+
 

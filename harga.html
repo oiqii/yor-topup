@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<script>
+let selectedPrice = "";
+
+function selectPrice(card) {
+    document.querySelectorAll(".price-card").forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+    selectedPrice = card.innerText;
+}
+
+function showPopup() {
+    let userId = document.querySelector("input[placeholder='Masukkan User ID']").value;
+    let zone = document.querySelector("input[placeholder='Zone ID']").value;
+    let payment = document.getElementById("payment").value;
+
+    if(userId === "" || zone === "" || payment === "" || selectedPrice === ""){
+        alert("Mohon isi semua data dulu!");
+        return;
+    }
+
+    document.getElementById("confirmText").innerText =
+        `User ID: ${userId} (${zone})\nNominal: ${selectedPrice}\nMetode: ${payment}`;
+
+    document.getElementById("popupBox").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popupBox").style.display = "none";
+}
+</script>
 
 <header>
     <h1>TOP UP GAME MURAH</h1>
@@ -134,5 +163,6 @@
 
 </body>
 </html>
+
 
 

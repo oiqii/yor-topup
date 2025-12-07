@@ -30,25 +30,32 @@
 
     <div class="game-list">
 
-        <a href="harga.html" class="game-card">
-            <img src="images/MobileLegends.png" alt="Mobile Legends">
-            <h3>Mobile Legends</h3>
-        </a>
+       <a href="harga.html" class="game-card" onclick="selectGame('Mobile Legends')">
+    <img src="images/MobileLegends.png">
+    <h3>Mobile Legends</h3>
+</a>
 
-        <a href="harga.html" class="game-card">
-            <img src="images/FreeFire.jpg" alt="Free Fire">
-            <h3>Free Fire</h3>
-        </a>
+<a href="harga.html" class="game-card" onclick="selectGame('Free Fire')">
+    <img src="images/FreeFire.jpg">
+    <h3>Free Fire</h3>
+</a>
 
-        <a href="harga.html" class="game-card">
-            <img src="images/PubgMobile.png" alt="PUBG Mobile">
-            <h3>PUBG Mobile</h3>
-        </a>
+<a href="harga.html" class="game-card" onclick="selectGame('PUBG Mobile')">
+    <img src="images/PubgMobile.png">
+    <h3>PUBG Mobile</h3>
+</a>
 
-        <a href="harga.html" class="game-card">
-            <img src="images/GenshinImpact.png" alt="Genshin Impact">
-            <h3>Genshin Impact</h3>
-        </a>
+<a href="harga.html" class="game-card" onclick="selectGame('Genshin Impact')">
+    <img src="images/GenshinImpact.png">
+    <h3>Genshin Impact</h3>
+</a>
+
+<script>
+function selectGame(game) {
+    localStorage.setItem("selectedGame", game);
+}
+</script>
+
     </div>
 </section>
 
@@ -58,3 +65,4 @@
 
 </body>
 </html>
+

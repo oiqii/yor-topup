@@ -21,7 +21,6 @@
     <h2>Pilih Game Kamu</h2>
 
     <div class="game-list">
-
         <div class="game-card" onclick="openPopup('Mobile Legends')">
             <img src="images/MobileLegends.png">
             <h3>Mobile Legends</h3>
@@ -41,29 +40,24 @@
             <img src="images/GenshinImpact.png">
             <h3>Genshin Impact</h3>
         </div>
-
     </div>
 </section>
 
 
-<!-- POPUP FULLSCREEN -->
+<!-- POPUP -->
 <div id="popup" class="popup-full">
     <div class="popup-box">
 
-        <button class="back-btn" onclick="closePopup()">← Kembali</button>
-
+        <button class="back-btn" onclick="closePopup()">← Ganti Game</button>
         <h2 id="popupGame">Top Up</h2>
 
-        <!-- Step 1 -->
         <input type="text" id="uid" placeholder="Masukkan User ID">
         <input type="text" id="zone" placeholder="Zone ID">
 
-        <!-- Step 2 -->
         <h3>Pilih Nominal</h3>
         <div id="priceList" class="price-box"></div>
 
-        <!-- Step 3 -->
-        <h3>Pembayaran</h3>
+        <h3>Metode Pembayaran</h3>
         <select id="payment">
             <option value="">Pilih metode</option>
             <option value="Dana">Dana</option>
@@ -78,22 +72,19 @@
 
 
 <footer>
- © 2025 YorTopUp - Layanan Top Up Cepat & Aman
+ © 2025 YorTopUp - Top Up Murah & Aman
 </footer>
 
-
 <script>
-const adminWA = "6282125193522"; 
+const adminWA = "6282125193522";
 
-// >>> HAPUS ICON GAMBAR <<< //
 const priceData = {
   "Mobile Legends": [
     ["86 Diamonds", "Rp 25.000"],
     ["172 Diamonds", "Rp 48.000"],
     ["257 Diamonds", "Rp 72.000"],
     ["344 Diamonds", "Rp 95.000"],
-    ["568 Diamonds", "Rp 145.000"],
-    ["Weekly Pass", "Rp 28.000"]
+    ["568 Diamonds", "Rp 145.000"]
   ],
   "Free Fire": [
     ["70 Diamonds", "Rp 10.000"],
@@ -121,35 +112,34 @@ let selectedPrice = "";
 function openPopup(game) {
   selectedGame = game;
   document.getElementById("popupGame").innerText = "Top Up " + game;
-  generatePriceList(game);
-  changeTheme(game);
+  generatePrice(game);
+  themeGame(game);
   document.getElementById("popup").style.display = "flex";
 }
 
-function generatePriceList(game) {
+function generatePrice(game) {
   let html = "";
   priceData[game].forEach(item => {
     html += `
       <div class="price-item" onclick="selectPrice(this)">
-         <h4>${item[0]}</h4>
-         <p>${item[1]}</p>
+        <h4>${item[0]}</h4>
+        <p>${item[1]}</p>
       </div>`;
   });
   document.getElementById("priceList").innerHTML = html;
 }
 
 function selectPrice(el) {
-  document.querySelectorAll(".price-item")
-  .forEach(e => e.classList.remove("selected"));
+  document.querySelectorAll(".price-item").forEach(e => e.classList.remove("selected"));
   el.classList.add("selected");
   selectedPrice = el.innerText;
 }
 
-function changeTheme(game) {
-  let color = "#009dff";
-  if(game == "Free Fire") color = "#ffc300";
-  if(game == "PUBG Mobile") color = "#d49121";
-  if(game == "Genshin Impact") color = "#b4d9ff";
+function themeGame(game) {
+  let color = "#00bfff";
+  if(game == "Free Fire") color = "#ffce27";
+  if(game == "PUBG Mobile") color = "#d59c37";
+  if(game == "Genshin Impact") color = "#94c7ff";
   document.documentElement.style.setProperty("--theme", color);
 }
 
@@ -175,6 +165,7 @@ Metode: ${method}`;
 
 function closePopup() {
   document.getElementById("popup").style.display = "none";
+  selectedPrice = "";
 }
 </script>
 

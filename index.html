@@ -6,6 +6,19 @@
     <title>Top Up Game Murah</title>
     <link rel="stylesheet" href="style.css">
 </head>
+    <script>
+    const cards = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    cards.forEach(card => observer.observe(card));
+</script>
+
 <body>
 
 <header>
@@ -59,4 +72,5 @@
 
 </body>
 </html>
+
 

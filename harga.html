@@ -63,13 +63,16 @@
 </div>
 
 <script>
-let game = localStorage.getItem("selectedGame") || "Mobile Legends";
 let selectedPrice = "";
+const adminPhone = "6282125193522"; // nomor admin otomatis
 
-document.getElementById("judulGame").innerHTML =
-`<span class="step-number">2</span> Pilih Nominal - ${game}`;
+const game = localStorage.getItem("selectedGame") || "Mobile Legends";
 
-const hargaData = {
+document.getElementById("gameTitle").innerHTML =
+`<span class='step-number'>2</span> Pilih Nominal - ${game}`;
+
+// DATA HARGA
+let dataHarga = {
     "Mobile Legends": [
         ["86 Diamonds", "Rp 25.000"],
         ["172 Diamonds", "Rp 48.000"],
@@ -92,51 +95,66 @@ const hargaData = {
     ]
 };
 
-let html = "";
-hargaData[game].forEach(item => {
-    html += `
-    <div class="price-card" onclick="selectPrice(this)">
-        <h4>${item[0]}</h4><p>${item[1]}</p>
-    </div>`;
+// Generate Card Harga
+let containerHarga = "";
+dataHarga[game].forEach(item => {
+    containerHarga += `
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>${item[0]}</h4>
+            <p>${item[1]}</p>
+        </div>
+    `;
 });
-document.getElementById("priceList").innerHTML = html;
+document.getElementById("priceList").innerHTML = containerHarga;
 
-function selectPrice(el){
+
+// Pilih Nominal
+function selectPrice(card) {
     document.querySelectorAll(".price-card")
-    .forEach(e => e.classList.remove("selected"));
-    el.classList.add("selected");
-    selectedPrice = el.innerText.replace("\n", " - ");
+        .forEach(c => c.classList.remove("selected"));
+
+    card.classList.add("selected");
+    selectedPrice = card.innerText;
 }
 
-function showPopup(){
-    let id = document.getElementById("uid").value;
-    let zone = document.getElementById("zone").value;
-    let pay = document.getElementById("payment").value;
 
-    if(id=="" || zone=="" || pay=="" || selectedPrice==""){
-        alert("Data belum lengkap");
+// POPUP KONFIRMASI + WHATSAPP BUTTON
+function showPopup() {
+    let uid = document.getElementById("uid").value;
+    let zone = document.getElementById("zone").value;
+    let payment = document.getElementById("payment").value;
+
+    if(uid === "" || zone === "" || payment === "" || selectedPrice === ""){
+        alert("Data belum lengkap, isi semuanya dulu kak 😊");
         return;
     }
 
-    let text = 
-`Game : ${game}
-User ID : ${id} (${zone})
-Nominal : ${selectedPrice}
-Pembayaran : ${pay}`;
+    let pesan = 
+`Halo kak, saya ingin top up 🙏
 
-    document.getElementById("confirmText").innerText = text;
+Game: ${game}
+ID: ${uid} (${zone})
+Nominal: ${selectedPrice.replace("\n"," - ")}
+Pembayaran: ${payment}
 
-    let waMsg = encodeURIComponent(text + "\n\nSaya ingin pesan kak 🙏");
-    document.getElementById("waBtn").href =
-        "https://wa.me/6282125193522?text=" + waMsg;
+Silakan diproses ya kak 😊`;
 
+    let waLink = `https://wa.me/${adminPhone}?text=${encodeURIComponent(pesan)}`;
+
+    document.getElementById("confirmText").innerText = pesan;
     document.getElementById("popupBox").style.display = "flex";
+
+    // Tambahkan tombol WhatsApp
+    document.getElementById("confirmText").innerHTML += 
+        `<br><br><a class='wa-button' href='${waLink}' target='_blank'>Order via WhatsApp</a>`;
 }
 
-function closePopup(){
+function closePopup() {
     document.getElementById("popupBox").style.display = "none";
 }
 </script>
 
+
 </body>
 </html>
+

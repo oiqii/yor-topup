@@ -3,39 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Harga - YorTopUp</title>
+    <title>Top Up Game Murah - Daftar Harga</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<script>
-let selectedPrice = "";
-
-function selectPrice(card) {
-    document.querySelectorAll(".price-card").forEach(c => c.classList.remove("selected"));
-    card.classList.add("selected");
-    selectedPrice = card.innerText;
-}
-
-function showPopup() {
-    let userId = document.querySelector("input[placeholder='Masukkan User ID']").value;
-    let zone = document.querySelector("input[placeholder='Zone ID']").value;
-    let payment = document.getElementById("payment").value;
-
-    if(userId === "" || zone === "" || payment === "" || selectedPrice === ""){
-        alert("Mohon isi semua data dulu!");
-        return;
-    }
-
-    document.getElementById("confirmText").innerText =
-        `User ID: ${userId} (${zone})\nNominal: ${selectedPrice}\nMetode: ${payment}`;
-
-    document.getElementById("popupBox").style.display = "flex";
-}
-
-function closePopup() {
-    document.getElementById("popupBox").style.display = "none";
-}
-</script>
 
 <header>
     <h1>TOP UP GAME MURAH</h1>
@@ -48,121 +19,119 @@ function closePopup() {
 </header>
 
 <div class="container">
-    <h2 style="text-align:center; color:var(--primary); margin-bottom: 15px;">
-        Daftar Harga Top Up
-    </h2>
-    <p style="text-align:center; margin-bottom: 25px;">
-        Pilih game terlebih dahulu untuk melihat harga
-    </p>
-<div class="topup-form">
 
-    <div class="form-title">
-        <span class="step-number">1</span>
-        Masukkan User ID
-    </div>
-
-    <div class="form-inputs">
-        <input type="text" placeholder="Masukkan User ID">
-        <input type="text" placeholder="Zone ID">
-    </div>
-
-    <p class="note">
-        Untuk mengetahui User ID, silakan klik profil di kiri atas dalam game. 
-        ID terlihat di bawah nama karakter. Contoh: 12345678(1234)
-    </p>
-
-</div>
-<!-- STEP 2 -->
-<div class="topup-form">
-    <div class="form-title">
-        <span class="step-number">2</span>
-        Pilih Nominal
-    </div>
-
-    <div class="price-list">
-        <div class="price-card" onclick="selectPrice(this)">
-            <h4>86 Diamonds</h4>
-            <p>Rp 25.000</p>
+    <!-- STEP 1 -->
+    <div class="topup-form">
+        <div class="form-title">
+            <span class="step-number">1</span>
+            Masukkan User ID
         </div>
-        <div class="price-card" onclick="selectPrice(this)">
-            <h4>172 Diamonds</h4>
-            <p>Rp 48.000</p>
+
+        <div class="form-inputs">
+            <input type="text" id="uid" placeholder="Masukkan User ID">
+            <input type="text" id="zone" placeholder="Zone ID">
         </div>
-        <div class="price-card" onclick="selectPrice(this)">
-            <h4>257 Diamonds</h4>
-            <p>Rp 72.000</p>
+
+        <p class="note">
+            Cek profil dalam game untuk mengetahui User ID. Contoh: 12345678(1234)
+        </p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="topup-form">
+        <div class="form-title">
+            <span class="step-number">2</span>
+            Pilih Nominal Top Up
+        </div>
+
+        <div class="price-list">
+            <div class="price-card" onclick="selectPrice(this)">
+                <h4>86 Diamonds</h4>
+                <p>Rp 25.000</p>
+            </div>
+
+            <div class="price-card" onclick="selectPrice(this)">
+                <h4>172 Diamonds</h4>
+                <p>Rp 48.000</p>
+            </div>
+
+            <div class="price-card" onclick="selectPrice(this)">
+                <h4>257 Diamonds</h4>
+                <p>Rp 72.000</p>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- STEP 3 -->
-<div class="topup-form">
-    <div class="form-title">
-        <span class="step-number">3</span>
-        Metode Pembayaran
+    <!-- STEP 3 -->
+    <div class="topup-form">
+        <div class="form-title">
+            <span class="step-number">3</span>
+            Pilih Metode Pembayaran
+        </div>
+
+        <select id="payment">
+            <option value="">-- Pilih Metode Pembayaran --</option>
+            <option value="Dana">Dana</option>
+            <option value="OVO">OVO</option>
+            <option value="Gopay">Gopay</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+        </select>
     </div>
 
-    <select id="payment">
-        <option value="">-- Pilih Metode Pembayaran --</option>
-        <option>Dana</option>
-        <option>OVO</option>
-        <option>Gopay</option>
-        <option>Transfer Bank</option>
-    </select>
+    <!-- BUTTON -->
+    <button id="btnProses" onclick="showPopup()">Proses Sekarang</button>
+
 </div>
 
-<!-- Tombol Proses -->
-<button onclick="showPopup()">Proses Sekarang</button>
 
 <!-- POPUP KONFIRMASI -->
 <div class="popup" id="popupBox">
     <div class="popup-content">
         <h3>Konfirmasi Pesanan</h3>
-        <p id="confirmText"></p>
-        <button onclick="closePopup()">OK</button>
+        <p id="confirmText" style="white-space: pre-line;"></p>
+        <button onclick="closePopup()">Tutup</button>
     </div>
 </div>
 
-    <!-- Mobile Legends -->
-    <h3 style="color:#fff; margin:18px 0;">Mobile Legends</h3>
-    <div class="card-list">
-        <div class="card">Diamond 86<br><strong>Rp 25.000</strong></div>
-        <div class="card">Diamond 172<br><strong>Rp 48.000</strong></div>
-        <div class="card">Diamond 257<br><strong>Rp 72.000</strong></div>
-    </div>
-
-    <!-- Free Fire -->
-    <h3 style="color:#fff; margin:18px 0;">Free Fire</h3>
-    <div class="card-list">
-        <div class="card">70 Diamonds<br><strong>Rp 10.000</strong></div>
-        <div class="card">140 Diamonds<br><strong>Rp 18.000</strong></div>
-        <div class="card">355 Diamonds<br><strong>Rp 45.000</strong></div>
-    </div>
-
-    <!-- PUBG -->
-    <h3 style="color:#fff; margin:18px 0;">PUBG Mobile</h3>
-    <div class="card-list">
-        <div class="card">60 UC<br><strong>Rp 12.000</strong></div>
-        <div class="card">300 UC<br><strong>Rp 56.000</strong></div>
-        <div class="card">600 UC<br><strong>Rp 110.000</strong></div>
-    </div>
-
-    <!-- Genshin Impact -->
-    <h3 style="color:#fff; margin:18px 0;">Genshin Impact</h3>
-    <div class="card-list">
-        <div class="card">Welkin<br><strong>Rp 65.000</strong></div>
-        <div class="card">300 Genesis<br><strong>Rp 65.000</strong></div>
-        <div class="card">980 Genesis<br><strong>Rp 190.000</strong></div>
-    </div>
-
-</div>
 
 <footer>
-  © 2025 YorTopUp - Situs Top up Game termurah, tercepat, dan terpercaya.
+  © 2025 YorTopUp - Layanan top up murah & terpercaya.
 </footer>
+
+
+<script>
+let selectedPrice = "";
+
+function selectPrice(card) {
+    document.querySelectorAll(".price-card")
+    .forEach(c => c.classList.remove("selected"));
+
+    card.classList.add("selected");
+    selectedPrice = card.innerText;
+}
+
+function showPopup() {
+    let userId = document.getElementById("uid").value;
+    let zone = document.getElementById("zone").value;
+    let payment = document.getElementById("payment").value;
+
+    if(userId === "" || zone === "" || payment === "" || selectedPrice === ""){
+        alert("Data belum lengkap. Isi semua terlebih dahulu!");
+        return;
+    }
+
+    document.getElementById("confirmText").innerText =
+    `User ID : ${userId} (${zone})
+Nominal : ${selectedPrice}
+Pembayaran : ${payment}`;
+
+    document.getElementById("popupBox").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popupBox").style.display = "none";
+}
+</script>
 
 </body>
 </html>
-
-
-

@@ -11,7 +11,7 @@
 <header>
   <h1>TOP UP GAME MURAH</h1>
   <nav>
-    <a class="active" href="index.html">Beranda</a>
+    <a class="active" href="./">Beranda</a>
     <a href="harga.html">Daftar Harga</a>
     <a href="cara-order.html">Cara Order</a>
     <a href="kontak.html">Kontak</a>
@@ -19,8 +19,8 @@
 </header>
 
 <section class="hero">
-    <h2>Top Up Cepat, Aman & Terpercaya</h2>
-    <p>Pilih game favoritmu di bawah ini</p>
+    <h2>Layanan Top Up Cepat & Aman</h2>
+    <p>Mobile Legends, Free Fire, PUBG, Genshin Impact & lainnya</p>
 </section>
 
 <section class="game-section">
@@ -28,36 +28,37 @@
 
     <div class="game-list">
 
-        <a href="harga.html" class="game-card" onclick="selectGame('Mobile Legends')">
-            <img src="images/MobileLegends.png" alt="Mobile Legends">
+        <div class="game-card" onclick="setGame('Mobile Legends')">
+            <img src="images/MobileLegends.png">
             <h3>Mobile Legends</h3>
-        </a>
+        </div>
 
-        <a href="harga.html" class="game-card" onclick="selectGame('Free Fire')">
-            <img src="images/FreeFire.jpg" alt="Free Fire">
+        <div class="game-card" onclick="setGame('Free Fire')">
+            <img src="images/FreeFire.jpg">
             <h3>Free Fire</h3>
-        </a>
+        </div>
 
-        <a href="harga.html" class="game-card" onclick="selectGame('PUBG Mobile')">
-            <img src="images/PubgMobile.png" alt="PUBG Mobile">
+        <div class="game-card" onclick="setGame('PUBG Mobile')">
+            <img src="images/PubgMobile.png">
             <h3>PUBG Mobile</h3>
-        </a>
+        </div>
 
-        <a href="harga.html" class="game-card" onclick="selectGame('Genshin Impact')">
-            <img src="images/GenshinImpact.png" alt="Genshin Impact">
+        <div class="game-card" onclick="setGame('Genshin Impact')">
+            <img src="images/GenshinImpact.png">
             <h3>Genshin Impact</h3>
-        </a>
+        </div>
 
     </div>
 </section>
 
 <footer>
-  © 2025 YorTopUp - Top up game termurah & terpercaya.
+  © 2025 YorTopUp - Top Up termurah & terpercaya.
 </footer>
 
 <script>
-function selectGame(game) {
+function setGame(game){
     localStorage.setItem("selectedGame", game);
+    window.location.href = "harga.html";
 }
 </script>
 

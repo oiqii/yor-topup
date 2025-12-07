@@ -263,14 +263,38 @@ header {
 
 /* Hero Background Gambar */
 .hero {
-    background: url('images/MobileLegends.png'); /* Bisa ganti ke gambar lain */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    backdrop-filter: blur(3px);
-    padding: 120px 10px;
-    text-shadow: 0 0 12px rgba(0,0,0,0.8);
-    border-bottom: 2px solid rgba(0,191,255,0.3);
+    position: relative;
+    height: 380px;
+    padding: 60px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #00d4ff;
+    overflow: hidden;
+}
+
+/* Background image lebih rapih */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/MobileLegends.png') center/cover no-repeat;
+    filter: blur(6px) brightness(40%);
+    z-index: -1;
+}
+
+/* Supaya tulisan tetap rapi di depan */
+.hero h2,
+.hero p {
+    position: relative;
+    z-index: 2;
+}
+
 }
 
 /* Hover neon pada card */
@@ -294,6 +318,7 @@ header {
     opacity: 1;
     transform: translateY(0);
 }
+
 
 
 

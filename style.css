@@ -130,3 +130,62 @@ footer {
     padding: 25px;
     opacity: .6;
 }
+/* Halaman Cara Order & Kontak */
+.page-content {
+    width: 80%;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.order-steps {
+    margin-top: 20px;
+}
+
+.step {
+    background: #0b1824;
+    padding: 14px;
+    margin: 10px 0;
+    border-left: 6px solid var(--theme);
+    border-radius: 8px;
+    font-size: 17px;
+    text-align: left;
+}
+
+.step span {
+    background: var(--theme);
+    color: #000;
+    font-weight: 700;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.contact-box {
+    margin-top: 20px;
+    background: #0b1824;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.contact-wa {
+    display: inline-block;
+    background: #25D366;
+    color: #000;
+    margin-top: 15px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.contact-wa:hover {
+    background: #1ebe5a;
+}
+
+.note {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: .8;
+}
+

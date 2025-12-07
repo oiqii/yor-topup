@@ -43,6 +43,56 @@
     </p>
 
 </div>
+<!-- STEP 2 -->
+<div class="topup-form">
+    <div class="form-title">
+        <span class="step-number">2</span>
+        Pilih Nominal
+    </div>
+
+    <div class="price-list">
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>86 Diamonds</h4>
+            <p>Rp 25.000</p>
+        </div>
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>172 Diamonds</h4>
+            <p>Rp 48.000</p>
+        </div>
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>257 Diamonds</h4>
+            <p>Rp 72.000</p>
+        </div>
+    </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="topup-form">
+    <div class="form-title">
+        <span class="step-number">3</span>
+        Metode Pembayaran
+    </div>
+
+    <select id="payment">
+        <option value="">-- Pilih Metode Pembayaran --</option>
+        <option>Dana</option>
+        <option>OVO</option>
+        <option>Gopay</option>
+        <option>Transfer Bank</option>
+    </select>
+</div>
+
+<!-- Tombol Proses -->
+<button onclick="showPopup()">Proses Sekarang</button>
+
+<!-- POPUP KONFIRMASI -->
+<div class="popup" id="popupBox">
+    <div class="popup-content">
+        <h3>Konfirmasi Pesanan</h3>
+        <p id="confirmText"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
 
     <!-- Mobile Legends -->
     <h3 style="color:#fff; margin:18px 0;">Mobile Legends</h3>
@@ -84,4 +134,5 @@
 
 </body>
 </html>
+
 

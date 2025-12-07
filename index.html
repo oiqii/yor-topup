@@ -11,39 +11,33 @@
 <header>
   <h1>TOP UP GAME MURAH</h1>
   <nav>
-    <a class="active" href="./">Beranda</a>
-    <a href="harga.html">Daftar Harga</a>
+    <a class="active" href="index.html">Beranda</a>
     <a href="cara-order.html">Cara Order</a>
     <a href="kontak.html">Kontak</a>
   </nav>
 </header>
-
-<section class="hero">
-    <h2>Layanan Top Up Cepat & Aman</h2>
-    <p>Mobile Legends, Free Fire, PUBG, Genshin Impact & lainnya</p>
-</section>
 
 <section class="game-section">
     <h2>Pilih Game Kamu</h2>
 
     <div class="game-list">
 
-        <div class="game-card" onclick="setGame('Mobile Legends')">
+        <div class="game-card" onclick="openPopup('Mobile Legends')">
             <img src="images/MobileLegends.png">
             <h3>Mobile Legends</h3>
         </div>
 
-        <div class="game-card" onclick="setGame('Free Fire')">
+        <div class="game-card" onclick="openPopup('Free Fire')">
             <img src="images/FreeFire.jpg">
             <h3>Free Fire</h3>
         </div>
 
-        <div class="game-card" onclick="setGame('PUBG Mobile')">
+        <div class="game-card" onclick="openPopup('PUBG Mobile')">
             <img src="images/PubgMobile.png">
             <h3>PUBG Mobile</h3>
         </div>
 
-        <div class="game-card" onclick="setGame('Genshin Impact')">
+        <div class="game-card" onclick="openPopup('Genshin Impact')">
             <img src="images/GenshinImpact.png">
             <h3>Genshin Impact</h3>
         </div>
@@ -51,14 +45,127 @@
     </div>
 </section>
 
+
+<!-- POPUP FULLSCREEN FORM -->
+<div id="popup" class="popup-full">
+
+    <div class="popup-box">
+        <h2 id="popupGame">Top Up</h2>
+
+        <!-- Step 1 -->
+        <input type="text" id="uid" placeholder="Masukkan User ID">
+        <input type="text" id="zone" placeholder="Zone ID">
+
+        <!-- Step 2 -->
+        <h3>Pilih Nominal</h3>
+        <div id="priceList" class="price-box"></div>
+
+        <!-- Step 3 -->
+        <h3>Pilih Metode Pembayaran</h3>
+        <select id="payment">
+            <option value="">Pilih metode</option>
+            <option value="Dana">Dana</option>
+            <option value="OVO">OVO</option>
+            <option value="Gopay">Gopay</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+        </select>
+
+        <br>
+        <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
+        <button class="btn-close" onclick="closePopup()">Tutup</button>
+    </div>
+
+</div>
+
+
 <footer>
-  © 2025 YorTopUp - Top Up termurah & terpercaya.
+ © 2025 YorTopUp - Layanan Top Up Cepat & Aman
 </footer>
 
+
 <script>
-function setGame(game){
-    localStorage.setItem("selectedGame", game);
-    window.location.href = "harga.html";
+const adminWA = "6282125193522"; // nomor admin
+
+// Harga Game
+const priceData = {
+  "Mobile Legends": [
+    ["86 Diamonds", "Rp 25.000"],
+    ["172 Diamonds", "Rp 48.000"],
+    ["257 Diamonds", "Rp 72.000"]
+  ],
+  "Free Fire": [
+    ["70 Diamonds", "Rp 10.000"],
+    ["140 Diamonds", "Rp 18.000"],
+    ["355 Diamonds", "Rp 45.000"]
+  ],
+  "PUBG Mobile": [
+    ["60 UC", "Rp 12.000"],
+    ["300 UC", "Rp 56.000"],
+    ["600 UC", "Rp 110.000"]
+  ],
+  "Genshin Impact": [
+    ["Welkin", "Rp 65.000"],
+    ["300 Genesis", "Rp 65.000"],
+    ["980 Genesis", "Rp 190.000"]
+  ]
+};
+
+let selectedGame = "";
+let selectedPrice = "";
+
+// Open Popup
+function openPopup(game) {
+  selectedGame = game;
+  document.getElementById("popupGame").innerText = "Top Up " + game;
+
+  // Generate Price List
+  let html = "";
+  priceData[game].forEach(item => {
+    html += `<div class="price-item" onclick="selectPrice(this)">
+                <h4>${item[0]}</h4>
+                <p>${item[1]}</p>
+             </div>`;
+  });
+  document.getElementById("priceList").innerHTML = html;
+
+  document.getElementById("popup").style.display = "flex";
+}
+
+// Select Price Highlight
+function selectPrice(el) {
+  document.querySelectorAll(".price-item")
+  .forEach(e => e.classList.remove("selected"));
+  el.classList.add("selected");
+  selectedPrice = el.innerText;
+}
+
+// Send to WhatsApp
+function sendOrder() {
+    let uid = document.getElementById("uid").value;
+    let zone = document.getElementById("zone").value;
+    let method = document.getElementById("payment").value;
+
+    if(uid=="" || selectedPrice=="" || method==""){
+      alert("Lengkapi data dulu!");
+      return;
+    }
+
+    let pesan =
+`Halo Admin, saya ingin top up.
+Game: ${selectedGame}
+User ID: ${uid} (${zone})
+Nominal: ${selectedPrice}
+Metode: ${method}`;
+
+    window.open(
+      `https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`
+    );
+}
+
+// Close Popup
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+  selectedPrice = "";
 }
 </script>
 

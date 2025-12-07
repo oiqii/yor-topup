@@ -51,6 +51,11 @@ nav a:hover {
     color: var(--primary);
     text-shadow: 0 0 8px var(--primary);
 }
+nav a.active {
+    color: var(--primary);
+    font-weight: 600;
+    text-shadow: 0 0 8px var(--primary);
+}
 
 /* HERO */
 .hero {
@@ -118,3 +123,4 @@ footer {
     margin-top: 40px;
     border-top: 1px solid rgba(0,191,255,0.25);
 }
+

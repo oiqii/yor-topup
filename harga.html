@@ -23,14 +23,13 @@
     <!-- STEP 1 -->
     <div class="topup-form">
         <div class="form-title">
-            <span class="step-number">1</span> Masukkan User ID
+            <span class="step-number">1</span>
+            Masukkan User ID
         </div>
 
-        <div class="form-inputs">
-            <input type="text" id="uid" placeholder="Masukkan User ID">
-            <input type="text" id="zone" placeholder="Zone ID">
-        </div>
-        <p class="note">Contoh: 12345678(1234)</p>
+        <input id="uid" type="text" placeholder="Masukkan User ID">
+        <input id="zone" type="text" placeholder="Zone ID">
+        <p class="note">Cek di profil dalam game untuk mengetahui User ID.</p>
     </div>
 
     <!-- STEP 2 -->
@@ -45,11 +44,12 @@
     <!-- STEP 3 -->
     <div class="topup-form">
         <div class="form-title">
-            <span class="step-number">3</span> Pilih Metode Pembayaran
+            <span class="step-number">3</span>
+            Metode Pembayaran
         </div>
 
         <select id="payment">
-            <option value="">-- Pilih Metode Pembayaran --</option>
+            <option value="">-- Pilih --</option>
             <option value="Dana">Dana</option>
             <option value="OVO">OVO</option>
             <option value="Gopay">Gopay</option>
@@ -57,40 +57,37 @@
         </select>
     </div>
 
-    <button id="btnProses" onclick="showPopup()">Proses Sekarang</button>
+    <button onclick="showPopup()">Proses Sekarang</button>
 
 </div>
 
-
-<!-- POPUP -->
-<div class="popup" id="popupBox" style="display:none;">
+<!-- POPUP KONFIRMASI -->
+<div class="popup" id="popupBox">
     <div class="popup-content">
         <h3>Konfirmasi Pesanan</h3>
         <p id="confirmText" style="white-space: pre-line;"></p>
-        <a id="waBtn" class="wa-button" href="#" target="_blank" rel="noopener" style="display:none;">Order via WhatsApp</a>
-        <br><br>
+
+        <!-- Tombol WhatsApp -->
+        <a id="waLink" class="wa-button" target="_blank">Order via WhatsApp</a>
+
         <button onclick="closePopup()">Tutup</button>
     </div>
 </div>
 
 
-<footer>
-  © 2025 YorTopUp - Layanan top up murah & terpercaya.
-</footer>
-
-
 <script>
-/* ==================== CONFIG ==================== */
-const adminPhone = "6282125193522"; // nomor admin
 let selectedPrice = "";
+const adminWA = "6282125193522";
+
+// Detect game dari halaman sebelumnya
 const game = localStorage.getItem("selectedGame") || "Mobile Legends";
 
-/* ==================== UPDATE STEP TITLE ==================== */
+// Update judul step ke-2
 document.getElementById("gameTitle").innerHTML =
- `<span class='step-number'>2</span> Pilih Nominal - ${game}`;
+`<span class='step-number'>2</span> Pilih Nominal - ${game}`;
 
-/* ==================== DATA HARGA ==================== */
-const hargaData = {
+// Daftar harga game
+const dataHarga = {
     "Mobile Legends": [
         ["86 Diamonds", "Rp 25.000"],
         ["172 Diamonds", "Rp 48.000"],
@@ -113,55 +110,58 @@ const hargaData = {
     ]
 };
 
-/* ==================== GENERATE CARD HARGA ==================== */
+// Generate kartu harga
 let list = "";
-hargaData[game].forEach(item => {
+dataHarga[game].forEach(item => {
     list += `
-    <div class="price-card" onclick="selectPrice(this)">
-        <h4>${item[0]}</h4>
-        <p>${item[1]}</p>
-    </div>`;
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>${item[0]}</h4>
+            <p>${item[1]}</p>
+        </div>
+    `;
 });
 document.getElementById("priceList").innerHTML = list;
 
-/* ==================== PILIH HARGA ==================== */
+// Pilih nominal
 function selectPrice(card) {
-    document.querySelectorAll(".price-card")
-        .forEach(c => c.classList.remove("selected"));
+    document.querySelectorAll(".price-card").forEach(c => c.classList.remove("selected"));
     card.classList.add("selected");
-    selectedPrice = card.innerText.replace(/\n+/g, " - ");
+    selectedPrice = card.innerText;
 }
 
-/* ==================== POPUP KONFIRMASI ==================== */
+// Popup Konfirmasi
 function showPopup() {
-    let uid = document.getElementById("uid").value.trim();
-    let zone = document.getElementById("zone").value.trim();
-    let payment = document.getElementById("payment").value;
+    const uid = document.getElementById("uid").value;
+    const zone = document.getElementById("zone").value;
+    const pay = document.getElementById("payment").value;
 
-    if (!uid || !zone || !payment || !selectedPrice) {
-        return alert("Mohon lengkapi semua data terlebih dahulu!");
+    if (!uid || !zone || !pay || !selectedPrice) {
+        alert("Isi semua data dulu!");
+        return;
     }
 
-    let msgDisplay =
+    const pesan =
 `Game: ${game}
 User ID: ${uid} (${zone})
 Nominal: ${selectedPrice}
-Pembayaran: ${payment}`;
+Metode: ${pay}`;
 
-    document.getElementById("confirmText").innerText = msgDisplay;
-
-    let msg = encodeURIComponent(msgDisplay);
-    document.getElementById("waBtn").href =
-        `https://wa.me/${adminPhone}?text=${msg}`;
-    document.getElementById("waBtn").style.display = "inline-block";
-
+    document.getElementById("confirmText").innerText = pesan;
     document.getElementById("popupBox").style.display = "flex";
+
+    // Generate link WA
+    document.getElementById("waLink").href =
+        `https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`;
 }
 
 function closePopup() {
     document.getElementById("popupBox").style.display = "none";
 }
 </script>
+
+<footer>
+  © 2025 YorTopUp - Murah, cepat & terpercaya.
+</footer>
 
 </body>
 </html>

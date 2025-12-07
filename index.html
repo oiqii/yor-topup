@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Top Up Game Murah</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Game Murah</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <h1>TOP UP GAME MURAH</h1>
+  <nav>
+    <a class="active">Beranda</a>
+    <a href="#">Cara Order</a>
+    <a href="#">Kontak</a>
+  </nav>
 </header>
 
 <section class="game-section">
-  <h2>Pilih Game Kamu</h2>
+    <h2>Pilih Game Kamu</h2>
 
-  <div class="game-list">
-      <div class="game-card" onclick="openPopup('Mobile Legends')">
-        <img src="images/MobileLegends.png">
-        <h3>Mobile Legends</h3>
-      </div>
-
-      <div class="game-card" onclick="openPopup('Free Fire')">
-        <img src="images/FreeFire.jpg">
-        <h3>Free Fire</h3>
-      </div>
-
-      <div class="game-card" onclick="openPopup('PUBG Mobile')">
-        <img src="images/PubgMobile.png">
-        <h3>PUBG Mobile</h3>
-      </div>
-
-      <div class="game-card" onclick="openPopup('Genshin Impact')">
-        <img src="images/GenshinImpact.png">
-        <h3>Genshin Impact</h3>
-      </div>
-  </div>
+    <div class="game-list">
+        <div class="game-card" onclick="openPopup('Mobile Legends')">
+            <img src="images/MobileLegends.png">
+            <h3>Mobile Legends</h3>
+        </div>
+        <div class="game-card" onclick="openPopup('Free Fire')">
+            <img src="images/FreeFire.jpg">
+            <h3>Free Fire</h3>
+        </div>
+        <div class="game-card" onclick="openPopup('PUBG Mobile')">
+            <img src="images/PubgMobile.png">
+            <h3>PUBG Mobile</h3>
+        </div>
+        <div class="game-card" onclick="openPopup('Genshin Impact')">
+            <img src="images/GenshinImpact.png">
+            <h3>Genshin Impact</h3>
+        </div>
+    </div>
 </section>
 
+<!-- POPUP -->
+<div id="popup" class="popup-full">
+    <div class="popup-box">
+        <button class="back-btn" onclick="closePopup()">← Kembali</button>
 
-<!-- POPUP STEP TOP UP -->
-<div id="popup" class="popup">
-  <div class="popup-box">
+        <h2 id="popupGame">Top Up</h2>
 
-    <button class="back-btn" onclick="closePopup()">← Kembali</button>
-    <h2 id="popupGame">Top Up</h2>
+        <input type="text" id="uid" placeholder="Masukkan User ID">
+        <input type="text" id="zone" placeholder="Zone ID">
 
-    <input type="text" id="uid" placeholder="Masukkan User ID">
-    <input type="text" id="zone" placeholder="Zone ID">
+        <h3>Pilih Nominal</h3>
+        <div id="priceList" class="price-box"></div>
 
-    <h3>Pilih Nominal</h3>
-    <div id="priceList" class="price-box"></div>
+        <h3>Pembayaran</h3>
+        <select id="payment">
+            <option value="">Pilih metode pembayaran</option>
+            <option value="Dana">Dana</option>
+            <option value="OVO">OVO</option>
+            <option value="Gopay">Gopay</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+        </select>
 
-    <h3>Pembayaran</h3>
-    <select id="payment">
-      <option value="">Pilih metode</option>
-      <option value="Dana">Dana</option>
-      <option value="OVO">OVO</option>
-      <option value="Gopay">Gopay</option>
-      <option value="Bank BCA">Bank BCA</option>
-    </select>
-
-    <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
-  </div>
+        <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
+    </div>
 </div>
 
-
 <footer>
-© 2025 YorTopUp - Aman, Murah & Cepat
+ © 2025 YorTopUp - Cepat, Murah & Aman
 </footer>
 
+
+<!-- ================== SCRIPT DI DALAM HTML =================== -->
+<script>
 const adminWA = "6282125193522";
 
 const priceData = {
@@ -148,7 +151,7 @@ function sendOrder() {
   let zone = document.getElementById("zone").value;
   let pay = document.getElementById("payment").value;
 
-  if(uid == "" || zone == "" || selectedPrice == "" || pay == ""){
+  if(uid === "" || zone === "" || selectedPrice === "" || pay === ""){
     alert("Lengkapi semua data!");
     return;
   }
@@ -157,13 +160,12 @@ function sendOrder() {
 `Halo Admin, saya ingin top up.
 Game: ${selectedGame}
 User ID: ${uid} (${zone})
-Nomor Item: ${selectedPrice}
+Nominal: ${selectedPrice}
 Metode Bayar: ${pay}`;
 
   window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`);
 }
-
+</script>
 
 </body>
 </html>
-

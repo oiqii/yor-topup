@@ -1,182 +1,76 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Game Murah</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Up Game Murah</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <h1>TOP UP GAME MURAH</h1>
-  <nav>
-    <a class="active" href="index.html">Beranda</a>
-    <a href="cara-order.html">Cara Order</a>
-    <a href="kontak.html">Kontak</a>
-  </nav>
 </header>
 
 <section class="game-section">
-    <h2>Pilih Game Kamu</h2>
+  <h2>Pilih Game Kamu</h2>
 
-    <div class="game-list">
-        <div class="game-card" onclick="openPopup('Mobile Legends')">
-            <img src="images/MobileLegends.png" alt="Mobile Legends">
-            <h3>Mobile Legends</h3>
-        </div>
+  <div class="game-list">
+      <div class="game-card" onclick="openPopup('Mobile Legends')">
+        <img src="images/MobileLegends.png">
+        <h3>Mobile Legends</h3>
+      </div>
 
-        <div class="game-card" onclick="openPopup('Free Fire')">
-            <img src="images/FreeFire.jpg" alt="Free Fire">
-            <h3>Free Fire</h3>
-        </div>
+      <div class="game-card" onclick="openPopup('Free Fire')">
+        <img src="images/FreeFire.jpg">
+        <h3>Free Fire</h3>
+      </div>
 
-        <div class="game-card" onclick="openPopup('PUBG Mobile')">
-            <img src="images/PubgMobile.png" alt="PUBG Mobile">
-            <h3>PUBG Mobile</h3>
-        </div>
+      <div class="game-card" onclick="openPopup('PUBG Mobile')">
+        <img src="images/PubgMobile.png">
+        <h3>PUBG Mobile</h3>
+      </div>
 
-        <div class="game-card" onclick="openPopup('Genshin Impact')">
-            <img src="images/GenshinImpact.png" alt="Genshin Impact">
-            <h3>Genshin Impact</h3>
-        </div>
-    </div>
+      <div class="game-card" onclick="openPopup('Genshin Impact')">
+        <img src="images/GenshinImpact.png">
+        <h3>Genshin Impact</h3>
+      </div>
+  </div>
 </section>
 
-<!-- POPUP TOPUP -->
-<div id="popup" class="popup-full">
-    <div class="popup-box">
 
-        <button class="back-btn" onclick="closePopup()">← Kembali</button>
+<!-- POPUP STEP TOP UP -->
+<div id="popup" class="popup">
+  <div class="popup-box">
 
-        <h2 id="popupGame">Top Up</h2>
+    <button class="back-btn" onclick="closePopup()">← Kembali</button>
+    <h2 id="popupGame">Top Up</h2>
 
-        <!-- Step 1 -->
-        <input type="text" id="uid" placeholder="Masukkan User ID">
-        <input type="text" id="zone" placeholder="Zone ID">
+    <input type="text" id="uid" placeholder="Masukkan User ID">
+    <input type="text" id="zone" placeholder="Zone ID">
 
-        <!-- Step 2 -->
-        <h3>Pilih Nominal</h3>
-        <div id="priceList" class="price-box"></div>
+    <h3>Pilih Nominal</h3>
+    <div id="priceList" class="price-box"></div>
 
-        <!-- Step 3 -->
-        <h3>Pembayaran</h3>
-        <select id="payment">
-            <option value="">Pilih metode pembayaran</option>
-            <option value="Dana">Dana</option>
-            <option value="OVO">OVO</option>
-            <option value="Gopay">Gopay</option>
-            <option value="Transfer Bank">Transfer Bank</option>
-        </select>
+    <h3>Pembayaran</h3>
+    <select id="payment">
+      <option value="">Pilih metode</option>
+      <option value="Dana">Dana</option>
+      <option value="OVO">OVO</option>
+      <option value="Gopay">Gopay</option>
+      <option value="Bank BCA">Bank BCA</option>
+    </select>
 
-        <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
-    </div>
+    <button class="btn-wa" onclick="sendOrder()">Order via WhatsApp</button>
+  </div>
 </div>
 
+
 <footer>
-  © 2025 YorTopUp - Layanan Top Up Cepat, Murah, & Aman
+© 2025 YorTopUp - Aman, Murah & Cepat
 </footer>
 
-<script>
-// Nomor Admin
-const adminWA = "6282125193522"; 
-
-// Data harga tanpa gambar icon
-const priceData = {
-  "Mobile Legends": [
-    ["86 Diamonds", "Rp 25.000"],
-    ["172 Diamonds", "Rp 48.000"],
-    ["257 Diamonds", "Rp 72.000"],
-    ["344 Diamonds", "Rp 95.000"],
-    ["568 Diamonds", "Rp 145.000"],
-    ["Weekly Pass", "Rp 28.000"]
-  ],
-  "Free Fire": [
-    ["70 Diamonds", "Rp 10.000"],
-    ["140 Diamonds", "Rp 18.000"],
-    ["355 Diamonds", "Rp 45.000"],
-    ["720 Diamonds", "Rp 90.000"]
-  ],
-  "PUBG Mobile": [
-    ["60 UC", "Rp 12.000"],
-    ["300 UC", "Rp 56.000"],
-    ["600 UC", "Rp 110.000"],
-    ["1500 UC", "Rp 260.000"]
-  ],
-  "Genshin Impact": [
-    ["Welkin", "Rp 65.000"],
-    ["300 Genesis", "Rp 65.000"],
-    ["980 Genesis", "Rp 190.000"],
-    ["1980 Genesis", "Rp 380.000"]
-  ]
-};
-
-let selectedGame = "";
-let selectedPrice = "";
-
-// Open Popup
-function openPopup(game) {
-  selectedGame = game;
-  document.getElementById("popupGame").innerText = "Top Up " + game;
-  generatePriceList(game);
-  changeTheme(game);
-  document.getElementById("popup").style.display = "flex";
-}
-
-// Generate Harga Berdasarkan Game
-function generatePriceList(game) {
-  let html = "";
-  priceData[game].forEach(item => {
-    html += `
-      <div class="price-item" onclick="selectPrice(this)">
-        <h4>${item[0]}</h4>
-        <p>${item[2]}</p>
-      </div>`;
-  });
-  document.getElementById("priceList").innerHTML = html;
-}
-
-function selectPrice(el) {
-  document.querySelectorAll(".price-item").forEach(e => e.classList.remove("selected"));
-  el.classList.add("selected");
-  selectedPrice = el.innerText;
-}
-
-// Ganti Warna Tema
-function changeTheme(game) {
-  let color = "#00bfff"; // Default ML
-  if(game == "Free Fire") color = "#ffc300";
-  if(game == "PUBG Mobile") color = "#d49121";
-  if(game == "Genshin Impact") color = "#b4d9ff";
-  document.documentElement.style.setProperty("--theme", color);
-}
-
-// Order via WhatsApp
-function sendOrder() {
-  let uid = document.getElementById("uid").value;
-  let zone = document.getElementById("zone").value;
-  let method = document.getElementById("payment").value;
-
-  if(uid=="" || method=="" || selectedPrice==""){
-    alert("Lengkapi semua data dulu!");
-    return;
-  }
-
-  let pesan = 
-`Halo Admin, saya ingin top up.
-Game: ${selectedGame}
-User ID: ${uid} (${zone})
-Nominal: ${selectedPrice}
-Metode: ${method}`;
-
-  window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`);
-}
-
-// Close Popup
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

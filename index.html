@@ -3,66 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Game Murah</title>
+    <title>Top Up Game Murah - Daftar Harga</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1>TOP UP GAME MURAH</h1>
-  <nav>
-    <a href="index.html">Beranda</a>
-    <a href="harga.html">Daftar Harga</a>
-    <a href="cara-order.html">Cara Order</a>
-    <a href="kontak.html">Kontak</a>
-  </nav>
+    <h1>TOP UP GAME MURAH</h1>
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a class="active" href="harga.html">Daftar Harga</a>
+        <a href="cara-order.html">Cara Order</a>
+        <a href="kontak.html">Kontak</a>
+    </nav>
 </header>
 
-<!-- HERO SECTION -->
-<section class="hero">
-    <h2>Layanan Top Up Cepat & Aman</h2>
-    <p>Mobile Legends, Free Fire, PUBG, Genshin Impact & lainnya</p>
-</section>
+<div class="container">
 
-<!-- GAME SELECTION SECTION -->
-<section class="game-section">
-    <h2>Pilih Game Kamu</h2>
+    <!-- STEP 1 -->
+    <div class="topup-form">
+        <div class="form-title">
+            <span class="step-number">1</span>
+            Masukkan User ID
+        </div>
 
-    <div class="game-list">
+        <div class="form-inputs">
+            <input type="text" id="uid" placeholder="Masukkan User ID">
+            <input type="text" id="zone" placeholder="Zone ID">
+        </div>
 
-       <a href="harga.html" class="game-card" onclick="selectGame('Mobile Legends')">
-    <img src="images/MobileLegends.png">
-    <h3>Mobile Legends</h3>
-</a>
+        <p class="note">
+            Cek profil dalam game untuk mengetahui User ID. Contoh: 12345678(1234)
+        </p>
+    </div>
 
-<a href="harga.html" class="game-card" onclick="selectGame('Free Fire')">
-    <img src="images/FreeFire.jpg">
-    <h3>Free Fire</h3>
-</a>
+    <!-- STEP 2 -->
+    <div class="topup-form">
+        <div class="form-title" id="gameTitle">
+            <span class="step-number">2</span>
+            Pilih Nominal
+        </div>
 
-<a href="harga.html" class="game-card" onclick="selectGame('PUBG Mobile')">
-    <img src="images/PubgMobile.png">
-    <h3>PUBG Mobile</h3>
-</a>
+        <div class="price-list" id="priceList"></div>
+    </div>
 
-<a href="harga.html" class="game-card" onclick="selectGame('Genshin Impact')">
-    <img src="images/GenshinImpact.png">
-    <h3>Genshin Impact</h3>
-</a>
+    <!-- STEP 3 -->
+    <div class="topup-form">
+        <div class="form-title">
+            <span class="step-number">3</span>
+            Pilih Metode Pembayaran
+        </div>
+
+        <select id="payment">
+            <option value="">-- Pilih Metode Pembayaran --</option>
+            <option value="Dana">Dana</option>
+            <option value="OVO">OVO</option>
+            <option value="Gopay">Gopay</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+        </select>
+    </div>
+
+    <!-- BUTTON -->
+    <button id="btnProses" onclick="showPopup()">Proses Sekarang</button>
+
+</div>
+
+
+<!-- POPUP KONFIRMASI -->
+<div class="popup" id="popupBox">
+    <div class="popup-content">
+        <h3>Konfirmasi Pesanan</h3>
+        <p id="confirmText" style="white-space: pre-line;"></p>
+        <button onclick="closePopup()">Tutup</button>
+    </div>
+</div>
+
+
+<footer>
+  © 2025 YorTopUp - Layanan top up murah & terpercaya.
+</footer>
+
 
 <script>
-function selectGame(game) {
-    localStorage.setItem("selectedGame", game);
+let selectedPrice = "";
+const game = localStorage.getItem("selectedGame") || "Mobile Legends";
+
+// UpdateJudul
+document.getElementById("gameTitle").innerHTML =
+`<span class='step-number'>2</span> Pilih Nominal - ${game}`;
+
+
+// List Harga Berdasarkan Game
+let dataHarga = {
+    "Mobile Legends": [
+        ["86 Diamonds", "Rp 25.000"],
+        ["172 Diamonds", "Rp 48.000"],
+        ["257 Diamonds", "Rp 72.000"]
+    ],
+    "Free Fire": [
+        ["70 Diamonds", "Rp 10.000"],
+        ["140 Diamonds", "Rp 18.000"],
+        ["355 Diamonds", "Rp 45.000"]
+    ],
+    "PUBG Mobile": [
+        ["60 UC", "Rp 12.000"],
+        ["300 UC", "Rp 56.000"],
+        ["600 UC", "Rp 110.000"]
+    ],
+    "Genshin Impact": [
+        ["Welkin", "Rp 65.000"],
+        ["300 Genesis", "Rp 65.000"],
+        ["980 Genesis", "Rp 190.000"]
+    ]
+};
+
+
+// Generate Harga
+let containerHarga = "";
+dataHarga[game].forEach(item => {
+    containerHarga += `
+        <div class="price-card" onclick="selectPrice(this)">
+            <h4>${item[0]}</h4>
+            <p>${item[1]}</p>
+        </div>`;
+});
+document.getElementById("priceList").innerHTML = containerHarga;
+
+
+// Pilih Card Harga
+function selectPrice(card) {
+    document.querySelectorAll(".price-card")
+    .forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+    selectedPrice = card.innerText;
+}
+
+
+// Popup Konfirmasi
+function showPopup() {
+    let uid = document.getElementById("uid").value;
+    let zone = document.getElementById("zone").value;
+    let payment = document.getElementById("payment").value;
+
+    if(uid === "" || zone === "" || payment === "" || selectedPrice === ""){
+        alert("Data belum lengkap, isi semua dulu!");
+        return;
+    }
+
+    document.getElementById("confirmText").innerText =
+`Game : ${game}
+User ID : ${uid} (${zone})
+Nominal : ${selectedPrice}
+Pembayaran : ${payment}`;
+
+    document.getElementById("popupBox").style.display = "flex";
+}
+
+function closePopup() {
+    document.getElementById("popupBox").style.display = "none";
 }
 </script>
 
-    </div>
-</section>
-
-<footer>
-  © 2025 YorTopUp - Situs Top up Game termurah, tercepat, dan terpercaya.
-</footer>
-
 </body>
 </html>
-

@@ -57,8 +57,7 @@ nav a:hover {
 
 /* HERO */
 .hero {
-    position: relative;
-    height: 380px;
+    height: 320px;
     padding: 60px 10px;
     display: flex;
     flex-direction: column;
@@ -66,17 +65,15 @@ nav a:hover {
     align-items: center;
     text-align: center;
     color: var(--primary);
-    overflow: hidden;
+    background: linear-gradient(to bottom, #06111f, #0a0f1a);
+    border-bottom: 2px solid rgba(0,191,255,0.25);
 }
 
+/* Hapus efek blur gambar */
 .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url('images/MobileLegends.png') center/cover no-repeat;
-    filter: blur(6px) brightness(45%);
-    z-index: -1;
+    display: none;
 }
+
 
 .hero h2,
 .hero p {
@@ -248,3 +245,4 @@ footer {
     border-top: 1px solid rgba(0,191,255,0.25);
     color: #fff;
 }
+

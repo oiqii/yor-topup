@@ -6,19 +6,6 @@
     <title>Top Up Game Murah</title>
     <link rel="stylesheet" href="style.css">
 </head>
-    <script>
-    const cards = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-            }
-        });
-    }, { threshold: 0.3 });
-
-    cards.forEach(card => observer.observe(card));
-</script>
-
 <body>
 
 <header>
@@ -31,46 +18,43 @@
   </nav>
 </header>
 
-<!-- HERO -->
+<!-- HERO SECTION -->
 <section class="hero">
     <h2>Layanan Top Up Cepat & Aman</h2>
     <p>Mobile Legends, Free Fire, PUBG, Genshin Impact & lainnya</p>
 </section>
 
-<!-- GAME LIST -->
+<!-- GAME SELECTION SECTION -->
 <section class="game-section">
     <h2>Pilih Game Kamu</h2>
 
     <div class="game-list">
 
-        <a href="harga.html" class="game-card fade-in">
+        <a href="harga.html" class="game-card">
             <img src="images/MobileLegends.png" alt="Mobile Legends">
             <h3>Mobile Legends</h3>
         </a>
 
-        <a href="harga.html" class="game-card fade-in">
+        <a href="harga.html" class="game-card">
             <img src="images/FreeFire.jpg" alt="Free Fire">
             <h3>Free Fire</h3>
         </a>
 
-        <a href="harga.html" class="game-card fade-in">
+        <a href="harga.html" class="game-card">
             <img src="images/PubgMobile.png" alt="PUBG Mobile">
             <h3>PUBG Mobile</h3>
         </a>
 
-        <a href="harga.html" class="game-card fade-in">
+        <a href="harga.html" class="game-card">
             <img src="images/GenshinImpact.png" alt="Genshin Impact">
             <h3>Genshin Impact</h3>
         </a>
-
     </div>
 </section>
 
 <footer>
-    © 2025 YorTopUp - Situs Top up Game termurah, tercepat, dan terpercaya.
+  © 2025 YorTopUp - Situs Top up Game termurah, tercepat, dan terpercaya.
 </footer>
 
 </body>
 </html>
-
-

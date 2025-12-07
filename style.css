@@ -155,3 +155,59 @@ footer {
     margin-top: 30px;
     border-top: 1px solid rgba(0,191,255,0.25);
 }
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 80px 10px;
+    background: linear-gradient(to bottom, #0a0f1a, #0f172a);
+    color: var(--primary);
+}
+
+/* GAME GALLERY */
+.game-section {
+    width: 90%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.game-section h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap: 25px;
+}
+
+.game-card {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 15px;
+    border: 1px solid rgba(0,191,255,0.3);
+    transition: 0.3s;
+    text-decoration: none;
+    color: white;
+}
+
+.game-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(0,191,255,0.6);
+    transform: translateY(-5px);
+}
+
+.game-card img {
+    width: 100%;
+    border-radius: 10px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.game-card h3 {
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 18px;
+}
+

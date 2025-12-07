@@ -3,44 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Game Murah - Harga</title>
+    <title>Top Up Game Murah - Daftar Harga</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-  <h1>TOP UP GAME MURAH</h1>
-  <nav>
-    <a href="./">Beranda</a>
-    <a class="active" href="harga.html">Daftar Harga</a>
-    <a href="cara-order.html">Cara Order</a>
-    <a href="kontak.html">Kontak</a>
-  </nav>
+    <h1>TOP UP GAME MURAH</h1>
+    <nav>
+        <a href="index.html">Beranda</a>
+        <a class="active" href="harga.html">Daftar Harga</a>
+        <a href="cara-order.html">Cara Order</a>
+        <a href="kontak.html">Kontak</a>
+    </nav>
 </header>
 
 <div class="container">
-    
+
     <!-- STEP 1 -->
     <div class="topup-form">
-        <div class="form-title"><span class="step-number">1</span> Masukkan User ID</div>
+        <div class="form-title">
+            <span class="step-number">1</span> Masukkan User ID
+        </div>
+
         <div class="form-inputs">
             <input type="text" id="uid" placeholder="Masukkan User ID">
             <input type="text" id="zone" placeholder="Zone ID">
         </div>
-        <p class="note">Cek di profil dalam game. Contoh: 12345678(1234)</p>
+        <p class="note">Contoh: 12345678(1234)</p>
     </div>
 
     <!-- STEP 2 -->
     <div class="topup-form">
-        <div class="form-title" id="judulGame"></div>
+        <div class="form-title" id="gameTitle">
+            <span class="step-number">2</span> Pilih Nominal
+        </div>
+
         <div class="price-list" id="priceList"></div>
     </div>
 
     <!-- STEP 3 -->
     <div class="topup-form">
-        <div class="form-title"><span class="step-number">3</span> Metode Pembayaran</div>
+        <div class="form-title">
+            <span class="step-number">3</span> Pilih Metode Pembayaran
+        </div>
+
         <select id="payment">
-            <option value="">-- Pilih --</option>
+            <option value="">-- Pilih Metode Pembayaran --</option>
             <option value="Dana">Dana</option>
             <option value="OVO">OVO</option>
             <option value="Gopay">Gopay</option>
@@ -52,27 +61,36 @@
 
 </div>
 
+
 <!-- POPUP -->
-<div class="popup" id="popupBox">
+<div class="popup" id="popupBox" style="display:none;">
     <div class="popup-content">
         <h3>Konfirmasi Pesanan</h3>
-        <p id="confirmText"></p>
-        <a id="waBtn" class="wa-button" target="_blank">Order via WhatsApp</a>
+        <p id="confirmText" style="white-space: pre-line;"></p>
+        <a id="waBtn" class="wa-button" href="#" target="_blank" rel="noopener" style="display:none;">Order via WhatsApp</a>
+        <br><br>
         <button onclick="closePopup()">Tutup</button>
     </div>
 </div>
 
-<script>
-let selectedPrice = "";
-const adminPhone = "6282125193522"; // nomor admin otomatis
 
+<footer>
+  © 2025 YorTopUp - Layanan top up murah & terpercaya.
+</footer>
+
+
+<script>
+/* ==================== CONFIG ==================== */
+const adminPhone = "6282125193522"; // nomor admin
+let selectedPrice = "";
 const game = localStorage.getItem("selectedGame") || "Mobile Legends";
 
+/* ==================== UPDATE STEP TITLE ==================== */
 document.getElementById("gameTitle").innerHTML =
-`<span class='step-number'>2</span> Pilih Nominal - ${game}`;
+ `<span class='step-number'>2</span> Pilih Nominal - ${game}`;
 
-// DATA HARGA
-let dataHarga = {
+/* ==================== DATA HARGA ==================== */
+const hargaData = {
     "Mobile Legends": [
         ["86 Diamonds", "Rp 25.000"],
         ["172 Diamonds", "Rp 48.000"],
@@ -95,58 +113,49 @@ let dataHarga = {
     ]
 };
 
-// Generate Card Harga
-let containerHarga = "";
-dataHarga[game].forEach(item => {
-    containerHarga += `
-        <div class="price-card" onclick="selectPrice(this)">
-            <h4>${item[0]}</h4>
-            <p>${item[1]}</p>
-        </div>
-    `;
+/* ==================== GENERATE CARD HARGA ==================== */
+let list = "";
+hargaData[game].forEach(item => {
+    list += `
+    <div class="price-card" onclick="selectPrice(this)">
+        <h4>${item[0]}</h4>
+        <p>${item[1]}</p>
+    </div>`;
 });
-document.getElementById("priceList").innerHTML = containerHarga;
+document.getElementById("priceList").innerHTML = list;
 
-
-// Pilih Nominal
+/* ==================== PILIH HARGA ==================== */
 function selectPrice(card) {
     document.querySelectorAll(".price-card")
         .forEach(c => c.classList.remove("selected"));
-
     card.classList.add("selected");
-    selectedPrice = card.innerText;
+    selectedPrice = card.innerText.replace(/\n+/g, " - ");
 }
 
-
-// POPUP KONFIRMASI + WHATSAPP BUTTON
+/* ==================== POPUP KONFIRMASI ==================== */
 function showPopup() {
-    let uid = document.getElementById("uid").value;
-    let zone = document.getElementById("zone").value;
+    let uid = document.getElementById("uid").value.trim();
+    let zone = document.getElementById("zone").value.trim();
     let payment = document.getElementById("payment").value;
 
-    if(uid === "" || zone === "" || payment === "" || selectedPrice === ""){
-        alert("Data belum lengkap, isi semuanya dulu kak 😊");
-        return;
+    if (!uid || !zone || !payment || !selectedPrice) {
+        return alert("Mohon lengkapi semua data terlebih dahulu!");
     }
 
-    let pesan = 
-`Halo kak, saya ingin top up 🙏
+    let msgDisplay =
+`Game: ${game}
+User ID: ${uid} (${zone})
+Nominal: ${selectedPrice}
+Pembayaran: ${payment}`;
 
-Game: ${game}
-ID: ${uid} (${zone})
-Nominal: ${selectedPrice.replace("\n"," - ")}
-Pembayaran: ${payment}
+    document.getElementById("confirmText").innerText = msgDisplay;
 
-Silakan diproses ya kak 😊`;
+    let msg = encodeURIComponent(msgDisplay);
+    document.getElementById("waBtn").href =
+        `https://wa.me/${adminPhone}?text=${msg}`;
+    document.getElementById("waBtn").style.display = "inline-block";
 
-    let waLink = `https://wa.me/${adminPhone}?text=${encodeURIComponent(pesan)}`;
-
-    document.getElementById("confirmText").innerText = pesan;
     document.getElementById("popupBox").style.display = "flex";
-
-    // Tambahkan tombol WhatsApp
-    document.getElementById("confirmText").innerHTML += 
-        `<br><br><a class='wa-button' href='${waLink}' target='_blank'>Order via WhatsApp</a>`;
 }
 
 function closePopup() {
@@ -154,7 +163,5 @@ function closePopup() {
 }
 </script>
 
-
 </body>
 </html>
-
